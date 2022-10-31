@@ -1,0 +1,7 @@
+Hello World
+This is the second line
+next
+0123456789
+this->'\n'<-='n
+almost end
+last line here :)
