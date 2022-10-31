@@ -55,8 +55,8 @@ char    *get_next_line(int fd)
         backup = st_buffer(fd, buffer);
     else if (ft_strchr(backup, '\n' == 0))
         backup = ft_strjoin(backup, st_buffer(fd, buffer));
-    printf("stored |%s|\n", backup);
-    printf("\\n at %d\n", ft_strchr(backup, '\n'));
+    //printf("stored |%s|\n", backup);
+    //printf("\\n at %d\n", ft_strchr(backup, '\n'));
     end = ft_strchr(backup, '\n');
     if (end == 0)
         return (0);
