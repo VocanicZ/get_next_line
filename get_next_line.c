@@ -17,7 +17,11 @@ static char    *st_backup(int fd, char *to_save)
     static char **backup;
 
     if (!backup)
+    {
         backup = malloc(sizeof(char *) * 100);
+        if (!backup)
+            return (0);
+    }
     if (!to_save)
     {
         if (!backup[fd])
@@ -33,13 +37,15 @@ static char    *st_buffer(int fd, char *buffer)
     int  size;
 
     buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+    if (!buffer)
+        return (0);
     size = read(fd, buffer, BUFFER_SIZE);
-    buffer[BUFFER_SIZE] = 0;
     if (size == -1)
     {
         free(buffer);
         return (0);
     }
+    buffer[size] = 0;
     return (buffer);
 }
 
@@ -56,12 +62,15 @@ char    *get_next_line(int fd)
         backup = st_buffer(fd, buffer);
     else if (ft_strchr(backup, '\n' == 0))
         backup = ft_strjoin(backup, st_buffer(fd, buffer));
+    if (!backup)
+        return (0);
     //printf("stored |%s|\n", backup);
     //printf("\\n at %d\n", ft_strchr(backup, '\n'));
     end = ft_strchr(backup, '\n');
     if (end == 0)
         return (0);
     st_backup(fd, ft_strtrim(backup, end + 1, ft_strlen(backup)));
-    backup = ft_strtrim(backup, 0, end);
+    backup = ft_strtrim(backup, 0, end + 1);
+    free(buffer);
     return (backup);
 }
