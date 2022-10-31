@@ -9,5 +9,6 @@
 # endif
 
 char    *get_next_line(int fd);
+char    *st_buffer(int fd, char *to_save);
 
 #endif

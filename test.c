@@ -12,8 +12,10 @@ int main(int argc, char **argv)
         while (*argv)
         {
             printf("path = %s\n", *argv);
-            fd = open(*argv++, O_RDONLY);
+            fd = open(*argv, O_RDONLY);
             printf("fd = %d\n", fd);
+            st_buffer(fd, *argv);
+            printf("%s\n", st_buffer(fd, 0));
         }
     }
 }
