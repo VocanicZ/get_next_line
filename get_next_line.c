@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 static char    *st_backup(int fd, char *to_save)
 {
@@ -61,7 +60,7 @@ char    *get_next_line(int fd)
     end = ft_strchr(backup, '\n');
     if (end == 0)
         return (0);
+    st_backup(fd, ft_strtrim(backup, end + 1, ft_strlen(backup)));
     backup = ft_strtrim(backup, 0, end);
-    st_backup(fd, backup);
     return (backup);
 }

@@ -1,6 +1,5 @@
 #include "get_next_line.h"
 #include <fcntl.h>
-#include <stdio.h>
 
 int main(int argc, char **argv)
 {
@@ -17,6 +16,7 @@ int main(int argc, char **argv)
             fd = open(*argv, O_RDONLY);
             printf("fd = %d\n", fd);
             printf("line->|%s|\n", get_next_line(fd));
+            printf("line2->|%s|\n", get_next_line(fd));
             argv++;
         }
     }
