@@ -15,7 +15,9 @@ int main(int argc, char **argv)
             fd = open(*argv, O_RDONLY);
             printf("fd = %d\n", fd);
             st_buffer(fd, *argv);
-            printf("%s\n", st_buffer(fd, 0));
+            printf("test->%s\n", st_buffer(fd, 0));
+            argv++;
         }
     }
+    return (0);
 }

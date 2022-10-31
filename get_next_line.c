@@ -17,10 +17,14 @@ char    *st_bufffer(int fd, char *to_save)
     static char **buffer;
 
     if (!to_save)
+    {
         return (buffer[fd]);
+    }
     buffer[fd] = to_save;
     return (0);
 }
-char    *get_next_line(int fd){
+
+char    *get_next_line(int fd)
+{
     return ("done");
 }
