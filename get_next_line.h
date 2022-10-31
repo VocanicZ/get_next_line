@@ -17,10 +17,6 @@
 # include <unistd.h>
 # include <stdio.h>
 
-# ifndef BUFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
-
 char    *get_next_line(int fd);
 size_t  ft_strlen(const char *s);
 size_t  ft_strchr(const char *s, int c);
