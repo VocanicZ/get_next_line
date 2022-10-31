@@ -12,14 +12,11 @@ int main(int argc, char **argv)
         argv++;
         while (*argv)
         {
+            printf("------------------------------\n");
             printf("path = %s\n", *argv);
             fd = open(*argv, O_RDONLY);
             printf("fd = %d\n", fd);
-            if (fd != -1)
-            {
-                st_backup(fd, *argv);
-                printf("test->%s\n", st_backup(fd, 0));
-            }
+            printf("line->|%s|\n", get_next_line(fd));
             argv++;
         }
     }
