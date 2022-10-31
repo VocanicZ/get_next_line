@@ -49,6 +49,7 @@ char    *get_next_line(int fd)
     char    *backup;
     size_t  end;
 
+    buffer = NULL;
     if (fd < 0 || BUFFER_SIZE < 1)
         return (0);
     if (!(backup = st_backup(fd, 0)))
