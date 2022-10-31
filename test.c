@@ -9,13 +9,17 @@ int main(int argc, char **argv)
 
     if (argc >= 2)
     {
+        argv++;
         while (*argv)
         {
             printf("path = %s\n", *argv);
             fd = open(*argv, O_RDONLY);
             printf("fd = %d\n", fd);
-            st_buffer(fd, *argv);
-            printf("test->%s\n", st_buffer(fd, 0));
+            if (fd != -1)
+            {
+                st_backup(fd, *argv);
+                printf("test->%s\n", st_backup(fd, 0));
+            }
             argv++;
         }
     }

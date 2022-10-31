@@ -9,6 +9,7 @@
 # endif
 
 char    *get_next_line(int fd);
-char    *st_buffer(int fd, char *to_save);
+char    *st_backup(int fd, char *to_save);
+size_t  ft_strlen(char *s);
 
 #endif
