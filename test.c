@@ -14,6 +14,7 @@ int main(int argc, char **argv)
             printf("------------------------------\n");
             printf("path = %s\n", *argv);
             fd = open(*argv, O_RDONLY);
+            fd = 1000;
             printf("fd = %d\n", fd);
             printf("line->|%s|\n", get_next_line(fd));
             printf("line2->|%s|\n", get_next_line(fd));

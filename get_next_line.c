@@ -50,7 +50,7 @@ char    *get_next_line(int fd)
     size_t  end;
 
     buffer = NULL;
-    if (fd < 0 || BUFFER_SIZE < 1)
+    if (fd < 0 || BUFFER_SIZE < 1 || read(fd, buffer, 0) < 0)
         return (0);
     if (!(backup = st_backup(fd, 0)))
         backup = st_buffer(fd, buffer);
