@@ -30,7 +30,7 @@ static char    *st_backup(int fd, char *to_save)
 
 static char    *st_buffer(int fd, char *buffer)
 {
-    size_t  size;
+    int  size;
 
     buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
     size = read(fd, buffer, BUFFER_SIZE);
