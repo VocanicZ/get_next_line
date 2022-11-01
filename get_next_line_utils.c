@@ -14,19 +14,22 @@
 
 size_t  ft_strlen(const char *s)
 {
-    //printf("strlening..\n");
+    //printf("| strlening..[\n");
     size_t  i;
 
     i = 0;
-    while (*s++)
+    while (s[i])
+    {
+        //printf("__s[%d] = %c", i, s[i]);
         i++;
-    //printf("returning %d\n", i);
+    }
+    //printf("| returning %d]\n", i);
     return (i);
 }
 
 size_t  ft_strchr(const char *s, int c)
 {
-    //printf("strchring..\n");
+    //printf("| strchring..[\n");
     size_t  len;
     size_t  i;
 
@@ -35,18 +38,18 @@ size_t  ft_strchr(const char *s, int c)
     while (i < len)
     {
         if (s[i] == c){
-            //printf("returning %d\n", i);
+            //printf("| returning %d]\n", i);
             return (i);
         }
         i++;
     }
-    //printf("returning 0\n");
+    //printf("| returning 0]\n");
     return (0);
 }
 
 char    *ft_strjoin(const char *s1, const char *s2)
 {
-    //printf("strjoining..\n");
+    //printf("| strjoining..[\n");
     char    *ptr;
     size_t  i;
     
@@ -61,13 +64,13 @@ char    *ft_strjoin(const char *s1, const char *s2)
     while (*s2)
         ptr[i++] = *s2++;
     ptr[i] = '\0';
-    //printf("returning %s\n", ptr);
+    //printf("| returning %s]\n", ptr);
     return (ptr);
 }
 
-char    *ft_strtrim(char const *s, size_t start, size_t stop)
+char    *ft_strtrim(const char *s, size_t start, size_t stop)
 {
-    //printf("strtrimming..\n");
+    //printf("| strtrimming..[\n");
     char    *str;
     size_t  i;
     
@@ -76,6 +79,6 @@ char    *ft_strtrim(char const *s, size_t start, size_t stop)
     while (start < stop)
         str[i++] = s[start++];
     str[i] = 0;
-    //printf("returning %s\n", str);
+    //printf("| returning %s]\n", str);
     return (str);
 }

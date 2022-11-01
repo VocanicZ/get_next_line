@@ -4,7 +4,7 @@
 int main(int argc, char **argv)
 {
     int fd;
-    char *str;
+    char *line;
 
     if (argc >= 2)
     {
@@ -15,8 +15,12 @@ int main(int argc, char **argv)
             printf("path = %s\n", *argv);
             fd = open(*argv, O_RDONLY);
             printf("fd = %d\n", fd);
-            printf("line->|%s|\n", get_next_line(fd));
-            printf("line2->|%s|\n", get_next_line(fd));
+            while (line = get_next_line(fd))
+            {
+                printf("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV\n");
+                printf("line -> |%s|\n", line);
+                printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
+            }
             argv++;
         }
     }
