@@ -19,6 +19,7 @@ int main(int argc, char **argv)
             {
                 printf("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV\n");
                 printf("line -> |%s|\n", line);
+                sleep(1);
                 printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
             }
             argv++;
