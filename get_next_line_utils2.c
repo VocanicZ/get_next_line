@@ -14,6 +14,8 @@
 
 size_t  ft_strlen(const char *s)
 {
+    printf("ft_strlen(%s)\n", s);
+
     size_t  i;
     
     i = 0;
@@ -24,6 +26,7 @@ size_t  ft_strlen(const char *s)
 
 int ft_strchr(const char *s, int c)
 {
+    printf("ft_strchr(%s, %c)\n", s, c);
     int i;
 
     i = 0;
@@ -39,6 +42,7 @@ int ft_strchr(const char *s, int c)
 
 char    *ft_strjoin(char **s1, char **s2)
 {
+    printf("ft_strjoin(%s, %s)\n", *s1, *s2);
     char    *str;
     size_t  i;
     size_t  j;
@@ -61,6 +65,7 @@ char    *ft_strjoin(char **s1, char **s2)
 
 char    *ft_strpop(char **s, int end)
 {
+    printf("ft_strpop(%s, %d)\n", *s, end);
     int i;
     int j;
     char    *pop;
