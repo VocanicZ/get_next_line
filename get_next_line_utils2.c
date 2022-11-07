@@ -21,6 +21,7 @@ size_t  ft_strlen(const char *s)
     i = 0;
     while (*s++)
         i++;
+    printf("ft_strlen: return(%d)\n", i);
     return (i);
 }
 
@@ -36,7 +37,11 @@ int ft_strchr(const char *s, int c)
         i++;
     }
     if (*s-- != c)
+    {
+        printf("ft_strchr: return(-1)\n");
         return (-1);
+    }
+    printf("ft_strchr: return(%d)\n", i);
     return (i);
 }
 
@@ -60,6 +65,7 @@ char    *ft_strjoin(char **s1, char **s2)
         str[i++] = (*s2)[j++];
     free(*s2);
     str[i] = 0;
+    printf("ft_strjoin: return(%s)\n", str);
     return (str);
 }
 
@@ -76,8 +82,12 @@ char    *ft_strpop(char **s, int end)
         return (0);
     i = 0;
     while ((*s)[i] && i < end)
+    {
+        printf("ft_strpop(%c && %d < %d)\n", (*s)[i], i, end);
         pop[i] = (*s)[i++];
-    pop[i] == 0;
+    }
+    pop[i] = 0;
+    printf("ft_strpop(pop = %s, i = %d)\n", pop, i);
     i = ft_strlen(*s) - end - 1;
     if (!i)
     {
@@ -93,5 +103,6 @@ char    *ft_strpop(char **s, int end)
     buffer[j] = 0;
     free(*s);
     *s = buffer;
+    printf("ft_strpop: return(%s, %s)\n", pop, *s);
     return (pop);
 }
