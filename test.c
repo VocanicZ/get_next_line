@@ -16,12 +16,7 @@ int main(int argc, char **argv)
             fd = open(*argv, O_RDONLY);
             printf("fd = %d\n", fd);
             while (line = get_next_line(fd))
-            {
-                printf("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV\n");
                 printf("line -> |%s|\n", line);
-                sleep(1);
-                printf("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
-            }
             argv++;
         }
     }
