@@ -1,5 +1,6 @@
 #include "get_next_line4.h"
 
+# define BUFFER_SIZE =1
 static char    *reallocate_line_buffer(char *line, size_t size)
 {
     char    *new_line;

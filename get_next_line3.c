@@ -11,25 +11,30 @@
 /* ************************************************************************** */
 
 #include "get_next_line3.h"
+#include <string.h>
 
-static char    *reallocate_line_buffer(char *line, size_t size)
+#define BUFFER_SIZE 4096
+
+static char *reallocate_line_buffer(char *line, size_t size)
 {
-    char    *new_line;
+    char *new_line;
 
     new_line = malloc(size);
     if (new_line == NULL)
     {
-        free(line);
+        if (line != NULL)
+            free(line);
         return (0);
     }
-    ft_strcpy(new_line, line);
-    free(line);
+    strncpy(new_line, line, size);
+    if (line != NULL)
+        free(line);
     return (new_line);
 }
 
-static char    *read_line(int fd, char *line, size_t size, size_t *i, ssize_t *n, char *buffer)
+static char *read_line(int fd, char *line, size_t size, size_t *i, ssize_t *n, char *buffer)
 {
-    int     j;
+    int j;
 
     while ((*n = read(fd, buffer, BUFFER_SIZE)) > 0)
     {
@@ -51,15 +56,14 @@ static char    *read_line(int fd, char *line, size_t size, size_t *i, ssize_t *n
             }
         }
     }
-    free(buffer);
     return (line);
 }
 
 char *get_next_line(int fd)
 {
-    char        *data[2]; //data[0] = *line data[1] = *buffer
-    size_t      i;
-    ssize_t     n;
+    char *data[2];
+    size_t i;
+    ssize_t n;
 
     data[0] = malloc(BUFFER_SIZE);
     if (data[0] == NULL)
