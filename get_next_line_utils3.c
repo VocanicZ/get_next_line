@@ -1,15 +1,11 @@
 #include "get_next_line3.h"
 
-char    *ft_strcpy(char *dest, const char *src)
+void    ft_strncpy(char *dest, const char *src, size_t n)
 {
-    char *d;
-    const char *s;
+    size_t i;
 
-    d = dest;
-    s = src;
-    while (*s)
-        *d++ = *s++;
-    *d = '\0';
-
-    return dest;
+    for (i = 0; i < n && src[i] != '\0'; i++)
+        dest[i] = src[i];
+    for (; i < n; i++)
+        dest[i] = '\0';
 }

@@ -5,6 +5,6 @@
 # include <stdlib.h>
 
 char    *get_next_line(int fd);
-char    *ft_strcpy(char *dest, const char *src);
+void    *ft_strncpy(char *dest, const char *src, size_t n);
 
 # endif

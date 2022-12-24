@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line3.h"
-#include <string.h>
-
-#define BUFFER_SIZE 4096
 
 static char *reallocate_line_buffer(char *line, size_t size)
 {
