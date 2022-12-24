@@ -5,19 +5,17 @@ int main(int argc, char **argv)
 {
     int fd;
     char *line;
+    int randint = 1 + rand() / (RAND_MAX / (4 - 1 + 1) + 1);
 
-    if (argc >= 2)
+    if (argc == 5)
     {
-        argv++;
-        while (*argv)
+        while (argc--)
         {
             printf("------------------------------\n");
             printf("path = %s\n", *argv);
-            fd = open(*argv, O_RDONLY);
+            fd = open(argv[randint], O_RDONLY);
             printf("fd = %d\n", fd);
-            while (line = get_next_line(fd))
-                printf("line -> |%s|\n", line);
-            argv++;
+            printf("line -> |%s|\n", get_next_line(fd));
         }
     }
     return (0);
