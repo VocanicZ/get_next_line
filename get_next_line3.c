@@ -57,9 +57,7 @@ static char    *read_line(int fd, char *line, size_t size, int *i, ssize_t *n, c
 
 char *get_next_line(int fd)
 {
-    char        *data[2];
-    //char        *line; data[0]
-    //char        *buffer; data[1]
+    char        *data[2]; //data[0] = *line data[1] = *buffer
     int         i;
     ssize_t     n;
 
