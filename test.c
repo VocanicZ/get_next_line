@@ -1,22 +1,38 @@
-#include "get_next_line.h"
+#include <stdio.h>
+#include "get_next_line3.h"
+#include <string.h>
 #include <fcntl.h>
 
-int main(int argc, char **argv)
+
+int main(int argc, char *argv[])
 {
     int fd;
     char *line;
-    int randint = 1 + rand() / (RAND_MAX / (4 - 1 + 1) + 1);
 
-    if (argc == 5)
+    if (argc < 2)
     {
-        while (argc--)
-        {
-            printf("------------------------------\n");
-            printf("path = %s\n", *argv);
-            fd = open(argv[randint], O_RDONLY);
-            printf("fd = %d\n", fd);
-            printf("line -> |%s|\n", get_next_line(fd));
-        }
+        fprintf(stderr, "Usage: test file\n");
+        return 1;
     }
-    return (0);
+
+    fd = open(argv[1], O_RDONLY);
+    if (fd < 0)
+    {
+        perror("open");
+        return 1;
+    }
+
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        printf("%s\n", line);
+        free(line);
+    }
+
+    if (close(fd) < 0)
+    {
+        perror("close");
+        return 1;
+    }
+
+    return 0;
 }

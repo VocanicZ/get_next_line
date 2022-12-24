@@ -57,30 +57,31 @@ static char    *read_line(int fd, char *line, size_t size, int *i, ssize_t *n, c
 
 char *get_next_line(int fd)
 {
-    char        *line;
-    char        *buffer;
+    char        *data[2];
+    //char        *line; data[0]
+    //char        *buffer; data[1]
     int         i;
     ssize_t     n;
 
-    line = malloc(BUFFER_SIZE);
-    if (line == NULL)
+    data[0] = malloc(BUFFER_SIZE);
+    if (data[0] == NULL)
         return (NULL);
-    buffer = malloc(BUFFER_SIZE + 1);
-    if (buffer == NULL)
+    data[1] = malloc(BUFFER_SIZE + 1);
+    if (data[1] == NULL)
         return (NULL);
     i = 0;
-    line = read_line(fd, line, BUFFER_SIZE, &i, &n, buffer);
-    if (!line)
+    data[0] = read_line(fd, data[0], BUFFER_SIZE, &i, &n, data[1]);
+    if (!data[0])
     {
-        free(buffer);
+        free(data[1]);
         return (NULL);
     }
     if (i > 0 || (i == 0 && n == 1))
     {
-        line[i] = '\0';
-        return (line);
+        data[0][i] = '\0';
+        return (data[0]);
     }
-    free(line);
-    free(buffer);
+    free(data[0]);
+    free(data[1]);
     return (NULL);
 }
