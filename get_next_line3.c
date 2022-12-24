@@ -23,7 +23,7 @@ static char *reallocate_line_buffer(char *line, size_t size)
             free(line);
         return (0);
     }
-    strncpy(new_line, line, size);
+    ft_strncpy(new_line, line, size);
     if (line != NULL)
         free(line);
     return (new_line);
