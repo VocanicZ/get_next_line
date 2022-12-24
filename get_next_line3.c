@@ -27,7 +27,7 @@ static char    *reallocate_line_buffer(char *line, size_t size)
     return (new_line);
 }
 
-static char    *read_line(int fd, char *line, size_t size, int *i, ssize_t *n, char *buffer)
+static char    *read_line(int fd, char *line, size_t size, size_t *i, ssize_t *n, char *buffer)
 {
     int     j;
 
@@ -58,7 +58,7 @@ static char    *read_line(int fd, char *line, size_t size, int *i, ssize_t *n, c
 char *get_next_line(int fd)
 {
     char        *data[2]; //data[0] = *line data[1] = *buffer
-    int         i;
+    size_t      i;
     ssize_t     n;
 
     data[0] = malloc(BUFFER_SIZE);
@@ -83,3 +83,4 @@ char *get_next_line(int fd)
     free(data[1]);
     return (NULL);
 }
+
