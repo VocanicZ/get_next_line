@@ -14,7 +14,7 @@
 
 char	*get_next_line(int fd)
 {
-	static t_list	*lst;
+	static	t_list	*lst;
 	char			*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
@@ -22,11 +22,11 @@ char	*get_next_line(int fd)
 	lst_read(fd, &lst);
 	if (!lst)
 		return (0);
-	lst_pop(lst, &line, fd);
-	lst_pop2(&lst, fd);
+	lst_pop(lst, &line);
+	lst_pop2(&lst);
 	if (!line[0])
 	{
-		lst_free(lst, fd);
+		lst_free(lst);
 		lst = 0;
 		free(line);
 		return (NULL);
@@ -40,9 +40,7 @@ void	lst_read(int fd, t_list **lst)
 	int		i;
 
 	i = 1;
-	while (*lst && (*lst)->fd != fd)
-		*lst = (*lst)->next;
-	while (!lst_contains(*lst, '\n', fd) && i)
+	while (!lst_contains(*lst, '\n') && i)
 	{
 		buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (!buf)
@@ -54,12 +52,12 @@ void	lst_read(int fd, t_list **lst)
 			return ;
 		}
 		buf[i] = '\0';
-		lst_append(lst, buf, i, fd);
+		lst_append(lst, buf, i);
 		free(buf);
 	}
 }
 
-void	lst_append(t_list **lst, char *buf, int readed, int fd)
+void	lst_append(t_list **lst, char *buf, int readed)
 {
 	int		i;
 	t_list	*last;
@@ -85,22 +83,22 @@ void	lst_append(t_list **lst, char *buf, int readed, int fd)
 		*lst = new_node;
 		return ;
 	}
-	last = lst_last(*lst, fd);
+	last = lst_last(*lst);
 	last->next = new_node;
 }
 
-void	lst_pop(t_list *lst, char **line, int fd)
+void	lst_pop(t_list *lst, char **line)
 {
 	int	i;
 	int	j;
 
 	if (!lst)
 		return ;
-	ft_realloc(line, lst, fd);
+	ft_realloc(line, lst);
 	if (!*line)
 		return ;
 	j = 0;
-	while (lst && lst->fd == fd)
+	while (lst)
 	{
 		i = 0;
 		while (lst->get[i])
@@ -117,7 +115,7 @@ void	lst_pop(t_list *lst, char **line, int fd)
 	(*line)[j] = '\0';
 }
 
-void	lst_pop2(t_list **lst, int fd)
+void	lst_pop2(t_list **lst)
 {
 	t_list	*last;
 	t_list	*clean_node;
@@ -128,12 +126,11 @@ void	lst_pop2(t_list **lst, int fd)
 	if (!lst || !clean_node)
 		return ;
 	clean_node->next = 0;
-	clean_node->fd = fd;
-	last = lst_last(*lst, fd);
+	last = lst_last(*lst);
 	i = 0;
-	while (last->get[i] && last->get[i] != '\n' && last->fd == fd)
+	while (last->get[i] && last->get[i] != '\n')
 		i++;
-	if (last->get && last->get[i] == '\n' && last->fd == fd)
+	if (last->get && last->get[i] == '\n')
 		i++;
 	clean_node->get = malloc(sizeof(char) * ((ft_strlen(last->get) - i) + 1));
 	if (!clean_node->get)
@@ -142,6 +139,6 @@ void	lst_pop2(t_list **lst, int fd)
 	while (last->get[i])
 		clean_node->get[j++] = last->get[i++];
 	clean_node->get[j] = '\0';
-	lst_free(*lst, fd);
+	lst_free(*lst);
 	*lst = clean_node;
 }

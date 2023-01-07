@@ -22,14 +22,14 @@ int	ft_strlen(const char *str)
 	return (len);
 }
 
-int	lst_contains(t_list *lst, char c, int fd)
+int	lst_contains(t_list *lst, char c)
 {
 	int		i;
     char    *str;
 
 	if (!lst)
 		return (0);
-	str = lst_last(lst, fd)->get;
+	str = lst_last(lst)->get;
 	i = 0;
 	while (str[i])
 	{
@@ -40,7 +40,7 @@ int	lst_contains(t_list *lst, char c, int fd)
 	return (0);
 }
 
-t_list	*lst_last(t_list *lst, int fd)
+t_list	*lst_last(t_list *lst)
 {
 	t_list	*cur;
 
@@ -50,7 +50,7 @@ t_list	*lst_last(t_list *lst, int fd)
 	return (cur);
 }
 
-void	ft_realloc(char **line, t_list *lst, int fd)
+void	ft_realloc(char **line, t_list *lst)
 {
 	int	i;
 	int	len;
@@ -76,7 +76,7 @@ void	ft_realloc(char **line, t_list *lst, int fd)
 	*line = malloc(sizeof(char) * (len + 1));
 }
 
-void	lst_free(t_list *lst, int fd)
+void	lst_free(t_list *lst)
 {
 	t_list	*cur;
 	t_list	*next;

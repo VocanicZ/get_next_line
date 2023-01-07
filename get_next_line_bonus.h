@@ -22,19 +22,18 @@
 
 typedef struct	s_list
 {
-	int				fd;
 	char			*get;
 	struct s_list	*next;
 }				t_list;
 
 char	*get_next_line(int fd);
 int 	ft_strlen(const char *str);
-void	ft_realloc(char **line, t_list *lst, int fd);
+void	ft_realloc(char **line, t_list *lst);
 void	lst_read(int fd, t_list **lst);
-int 	lst_contains(t_list *lst, char c, int fd);
-void	lst_append(t_list **lst, char *buf, int readed, int fd);
-t_list	*lst_last(t_list *lst, int fd);
-void	lst_pop(t_list *lst, char **line, int fd);
-void	lst_pop2(t_list **lst, int fd);
-void	lst_free(t_list *lst, int fd);
+int 	lst_contains(t_list *lst, char c);
+void	lst_append(t_list **lst, char *buf, int readed);
+t_list	*lst_last(t_list *lst);
+void	lst_pop(t_list *lst, char **line);
+void	lst_pop2(t_list **lst);
+void	lst_free(t_list *lst);
 #endif
