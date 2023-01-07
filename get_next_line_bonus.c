@@ -100,6 +100,7 @@ void	lst_append(t_list **lst, char *buf, int readed)
 	}
 	last = (*lst)->tail;
 	new_node->head = last->head;
+	new_node->tail = new_node;
 	last->tail = new_node;
 	last->next = new_node;
 }
