@@ -5,67 +5,139 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 23:07:00 by marvin            #+#    #+#             */
-/*   Updated: 2022/10/28 23:07:00 by marvin           ###   ########.fr       */
+/*   Created: 2022/11/04 22:18:37 by marvin            #+#    #+#             */
+/*   Updated: 2022/11/04 22:18:37 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char    *st_backup(char *to_save)
+char	*get_next_line(int fd)
 {
-    static char *backup;
+	static t_list	*lst;
+	char			*line;
 
-    if (!to_save)
-        return (backup);
-    else if (to_save == "")
-        backup = "";
-    else
-        backup = to_save;
-    return (0);
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
+		return (0);
+	lst_read(fd, &lst);
+	if (!lst)
+		return (0);
+	lst_pop(lst, &line);
+	lst_pop2(&lst);
+	if (!line[0])
+	{
+		lst_free(lst);
+		lst = 0;
+		free(line);
+		return (NULL);
+	}
+	return (line);
 }
 
-static char    *st_buffer(int fd, char *buffer)
+void	lst_read(int fd, t_list **lst)
 {
-    int size;
+	char	*buf;
+	int		i;
 
-    if (!buffer)
-        return (0);
-    size = read(fd, buffer, BUFFER_SIZE);
-    buffer[size] = 0;
-    if (size <= 0)
-    {
-        free(buffer);
-        return (0);
-    }
-    return (buffer);
+	i = 1;
+	while (!lst_contains(*lst, '\n') && i)
+	{
+		buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		if (!buf)
+			return ;
+		i = (int)read(fd, buf, BUFFER_SIZE);
+		if ((*lst == NULL && !i) || i == -1)
+		{
+			free(buf);
+			return ;
+		}
+		buf[i] = '\0';
+		lst_append(lst, buf, i);
+		free(buf);
+	}
 }
 
-char    *get_next_line(int fd)
+void	lst_append(t_list **lst, char *buf, int readed)
 {
-    char    *buffer;
-    char    *backup;
-    int  end;
+	int		i;
+	t_list	*last;
+	t_list	*new_node;
 
-    buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-    if (fd < 0 || BUFFER_SIZE < 1 || read(fd, buffer, 0) < 0)
-        return (0);
-    if (!(backup = st_backup(0)))
-    {
-        if (!(buffer = st_buffer(fd, buffer)))
-            return (0);
-        backup = ft_strdup(buffer);
-    }
-    while (!(end = ft_strchr(backup, '\n')) && end != -1 && (buffer = st_buffer(fd, buffer)))
-        backup = ft_strjoin(backup, buffer);
-    free(buffer);
-    if (end <= 0)
-    {
-        st_backup("");
-        end++;
-    }
-    else
-        st_backup(ft_strtrim(backup, end + 1, ft_strlen(backup)));
-    backup = ft_strtrim(backup, 0, end + 1);
-    return (backup);
+	new_node = malloc(sizeof(t_list));
+	if (!new_node)
+		return ;
+	new_node->next = 0;
+	new_node->get = malloc(sizeof(char) * (readed + 1));
+	if (!new_node->get)
+		return ;
+	i = 0;
+	while (buf[i] && i < readed)
+	{
+		new_node->get[i] = buf[i];
+		i++;
+	}
+	new_node->get[i] = '\0';
+	if (!*lst)
+	{
+		*list = new_node;
+		return ;
+	}
+	last = lst_last(*lst);
+	last->next = new_node;
+}
+
+void	lst_pop(t_list *lst, char **line)
+{
+	int	i;
+	int	j;
+
+	if (!lst)
+		return ;
+	ft_realloc(line, lst);
+	if (!*line)
+		return ;
+	j = 0;
+	while (lst)
+	{
+		i = 0;
+		while (lst->get[i])
+		{
+			if (lst->get[i] == '\n')
+			{
+				(*line)[j++] = lst->get[i];
+				break ;
+			}
+			(*line)[j++] = lst->get[i++];
+		}
+		lst = lst->next;
+	}
+	(*line)[j] = '\0';
+}
+
+void	lst_pop2(t_list **lst)
+{
+	t_list	*last;
+	t_list	*clean_node;
+	int		i;
+	int		j;
+
+	clean_node = malloc(sizeof(t_list));
+	if (!lst || !clean_node)
+		return ;
+	clean_node->next = 0;
+	last = lst_last(*lst);
+	i = 0;
+	while (last->get[i] && last->get[i] != '\n')
+		i++;
+	if (last->get && last->get[i] == '\n')
+		i++;
+	clean_node->get = malloc(sizeof(char) * ((ft_strlen(last->get) - i) + 1));
+	if (!clean_node->get)
+		return ;
+	j = 0;
+	while (last->get[i])
+		clean_node->get[j++] = last->get[i++];
+	clean_node->get[j] = '\0';
+	lst_free(*lst);
+	*lst = clean_node;
 }
