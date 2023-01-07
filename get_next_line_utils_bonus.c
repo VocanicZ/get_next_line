@@ -31,8 +31,6 @@ int	lst_contains(t_list *lst, char c)
 		return (0);
 	str = lst_last(lst)->get;
 	i = 0;
-	if (BUFFER_SIZE == 1)
-		i = ft_strlen(str) - 1;
 	while (str[i])
 	{
 		if (str[i] == c)
