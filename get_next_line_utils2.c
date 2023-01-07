@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-int	ft_contains(t_list *list, char c)
+int	lst_contains(t_list *list, char c)
 {
 	int		i;
 	t_list	*current;
@@ -32,7 +32,7 @@ int	ft_contains(t_list *list, char c)
 
 /* Returns a pointer to the last node in our list */
 
-t_list	*ft_get_last(t_list *list)
+t_list	*lst_last(t_list *list)
 {
 	t_list	*current;
 
@@ -71,7 +71,7 @@ void	generate_line(char **line, t_list *list)
 
 /* Frees the entire list. */
 
-void	free_list(t_list *list)
+void	lst_free(t_list *list)
 {
 	t_list	*current;
 	t_list	*next;
