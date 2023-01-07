@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#define BUFFER_SIZE 4096
+#include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 char *get_next_line(int fd) {
   static char buffer[BUFFER_SIZE];
