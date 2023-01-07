@@ -46,13 +46,13 @@ void	read_and_stash(int fd, t_list **stash)
 	int		readed;
 
 	readed = 1;
-	while (!found_newline(*stash) && readed != 0)
+	while (!found_newline(*stash) && readed)
 	{
 		buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		if (buf == NULL)
+		if (!buf)
 			return ;
 		readed = (int)read(fd, buf, BUFFER_SIZE);
-		if ((*stash == NULL && readed == 0) || readed == -1)
+		if ((*stash == NULL && !readed) || readed == -1)
 		{
 			free(buf);
 			return ;
@@ -72,11 +72,11 @@ void	add_to_stash(t_list **stash, char *buf, int readed)
 	t_list	*new_node;
 
 	new_node = malloc(sizeof(t_list));
-	if (new_node == NULL)
+	if (!new_node)
 		return ;
-	new_node->next = NULL;
+	new_node->next = 0;
 	new_node->content = malloc(sizeof(char) * (readed + 1));
-	if (new_node->content == NULL)
+	if (!new_node->content)
 		return ;
 	i = 0;
 	while (buf[i] && i < readed)
