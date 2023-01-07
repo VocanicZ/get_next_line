@@ -23,7 +23,6 @@ char *get_next_line(int fd) {
   while (1) {
     ssize_t bytes_read = read(fd, buffer + buffer_pos, BUFFER_SIZE - buffer_pos);
     if (bytes_read == -1) {
-      perror("read failed");
       free(line);
       return NULL;
     } else if (bytes_read == 0) {
@@ -41,7 +40,6 @@ char *get_next_line(int fd) {
         line_length = i + 1;
         line = realloc(line, line_capacity + line_length);
         if (line == NULL) {
-          perror("realloc failed");
           return NULL;
         }
         memcpy(line + line_capacity, buffer, line_length);
@@ -58,7 +56,6 @@ char *get_next_line(int fd) {
 
     line = realloc(line, line_capacity + BUFFER_SIZE);
     if (line == NULL) {
-      perror("realloc failed");
       return NULL;
     }
     memcpy(line + line_capacity, buffer, buffer_pos);
@@ -68,7 +65,6 @@ char *get_next_line(int fd) {
 
   line = realloc(line, line_capacity + buffer_pos);
   if (line == NULL) {
-    perror("realloc failed");
     return NULL;
   }
   memcpy(line + line_capacity, buffer, buffer_pos);
@@ -76,7 +72,6 @@ char *get_next_line(int fd) {
 
   line = realloc(line, line_capacity + 1);
   if (line == NULL) {
-    perror("realloc failed");
     return NULL;
   }
   line[line_capacity] = '\0';
