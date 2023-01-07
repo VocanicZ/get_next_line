@@ -19,7 +19,7 @@ int	found_newline(t_list *stash)
 
 	if (!stash)
 		return (0);
-	current = ft_lst_get_last(stash);
+	current = ft_get_last(stash);
 	i = 0;
 	while (current->content[i])
 	{
@@ -32,7 +32,7 @@ int	found_newline(t_list *stash)
 
 /* Returns a pointer to the last node in our stash */
 
-t_list	*ft_lst_get_last(t_list *stash)
+t_list	*ft_get_last(t_list *stash)
 {
 	t_list	*current;
 

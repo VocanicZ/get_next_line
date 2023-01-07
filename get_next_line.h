@@ -14,8 +14,9 @@
 # define GET_NEXT_LINE_H
 
 # include <stdlib.h>
-# include <sys/types.h>
-# include <sys/uio.h>
+
+/*# include <sys/types.h>
+# include <sys/uio.h>*/
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
@@ -30,7 +31,7 @@ typedef struct	s_list
 
 char	*get_next_line(int fd);
 int 	found_newline(t_list *stash);
-t_list	*ft_lst_get_last(t_list *stash);
+t_list	*ft_get_last(t_list *stash);
 void	read_and_stash(int fd, t_list **stash);
 void	add_to_stash(t_list **stash, char *buf, int readed);
 void	extract_line(t_list *stash, char **line);
