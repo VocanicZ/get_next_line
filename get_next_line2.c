@@ -14,58 +14,58 @@
 
 char	*get_next_line(int fd)
 {
-	static t_list	*stash = NULL;
+	static t_list	*list = NULL;
 	char			*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
 		return (0);
 	//line = NULL;
 	// 1. read from fd and add to linked list
-	read_and_stash(fd, &stash);
-	if (!stash)
+	read_and_list(fd, &list);
+	if (!list)
 		return (0);
-	// 2. extract from stash to line
-	extract_line(stash, &line);
-	// 3. clean up stash
-	clean_stash(&stash);
+	// 2. extract from list to line
+	extract_line(list, &line);
+	// 3. clean up list
+	ft_clean(&list);
 	if (!line[0])
 	{
-		free_stash(stash);
-		stash = NULL;
+		free_list(list);
+		list = NULL;
 		free(line);
 		return (NULL);
 	}
 	return (line);
 }
 
-/* Uses read() to add characters to the stash */
+/* Uses read() to add characters to the list */
 
-void	read_and_stash(int fd, t_list **stash)
+void	read_and_list(int fd, t_list **list)
 {
 	char	*buf;
 	int		readed;
 
 	readed = 1;
-	while (!found_newline(*stash) && readed)
+	while (!ft_contains(*list, '\n') && readed)
 	{
 		buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (!buf)
 			return ;
 		readed = (int)read(fd, buf, BUFFER_SIZE);
-		if ((*stash == NULL && !readed) || readed == -1)
+		if ((*list == NULL && !readed) || readed == -1)
 		{
 			free(buf);
 			return ;
 		}
 		buf[readed] = '\0';
-		add_to_stash(stash, buf, readed);
+		add_to_list(list, buf, readed);
 		free(buf);
 	}
 }
 
-/* Adds the content of our buffer to the end of our stash */
+/* Adds the content of our buffer to the end of our list */
 
-void	add_to_stash(t_list **stash, char *buf, int readed)
+void	add_to_list(t_list **list, char *buf, int readed)
 {
 	int		i;
 	t_list	*last;
@@ -85,51 +85,51 @@ void	add_to_stash(t_list **stash, char *buf, int readed)
 		i++;
 	}
 	new_node->content[i] = '\0';
-	if (!*stash)
+	if (!*list)
 	{
-		*stash = new_node;
+		*list = new_node;
 		return ;
 	}
-	last = ft_get_last(*stash);
+	last = ft_get_last(*list);
 	last->next = new_node;
 }
 
-/* Extracts all characters from our stash and stores them in out line.
+/* Extracts all characters from our list and stores them in out line.
  * stopping after the first \n it encounters */
 
-void	extract_line(t_list *stash, char **line)
+void	extract_line(t_list *list, char **line)
 {
 	int	i;
 	int	j;
 
-	if (!stash)
+	if (!list)
 		return ;
-	generate_line(line, stash);
+	generate_line(line, list);
 	if (!*line)
 		return ;
 	j = 0;
-	while (stash)
+	while (list)
 	{
 		i = 0;
-		while (stash->content[i])
+		while (list->content[i])
 		{
-			if (stash->content[i] == '\n')
+			if (list->content[i] == '\n')
 			{
-				(*line)[j++] = stash->content[i];
+				(*line)[j++] = list->content[i];
 				break ;
 			}
-			(*line)[j++] = stash->content[i++];
+			(*line)[j++] = list->content[i++];
 		}
-		stash = stash->next;
+		list = list->next;
 	}
 	(*line)[j] = '\0';
 }
 
 /* After extracting the line that was read, we don't need those characters
- * anymore. This function clears the stash so only the characters that have
- * not been returned at the end of get_next_line remain in our static stash. */
+ * anymore. This function clears the list so only the characters that have
+ * not been returned at the end of get_next_line remain in our static list. */
 
-void	clean_stash(t_list **stash)
+void	ft_clean(t_list **list)
 {
 	t_list	*last;
 	t_list	*clean_node;
@@ -137,10 +137,10 @@ void	clean_stash(t_list **stash)
 	int		j;
 
 	clean_node = malloc(sizeof(t_list));
-	if (!stash || !clean_node)
+	if (!list || !clean_node)
 		return ;
 	clean_node->next = 0;
-	last = ft_get_last(*stash);
+	last = ft_get_last(*list);
 	i = 0;
 	while (last->content[i] && last->content[i] != '\n')
 		i++;
@@ -153,6 +153,6 @@ void	clean_stash(t_list **stash)
 	while (last->content[i])
 		clean_node->content[j++] = last->content[i++];
 	clean_node->content[j] = '\0';
-	free_stash(*stash);
-	*stash = clean_node;
+	free_list(*list);
+	*list = clean_node;
 }

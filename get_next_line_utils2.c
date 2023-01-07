@@ -12,31 +12,31 @@
 
 #include "get_next_line.h"
 
-int	found_newline(t_list *stash)
+int	ft_contains(t_list *list, char c)
 {
 	int		i;
 	t_list	*current;
 
-	if (!stash)
+	if (!list)
 		return (0);
-	current = ft_get_last(stash);
+	current = ft_get_last(list);
 	i = 0;
 	while (current->content[i])
 	{
-		if (current->content[i] == '\n')
+		if (current->content[i] == c)
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-/* Returns a pointer to the last node in our stash */
+/* Returns a pointer to the last node in our list */
 
-t_list	*ft_get_last(t_list *stash)
+t_list	*ft_get_last(t_list *list)
 {
 	t_list	*current;
 
-	current = stash;
+	current = list;
 	while (current && current->next)
 		current = current->next;
 	return (current);
@@ -45,18 +45,18 @@ t_list	*ft_get_last(t_list *stash)
 /* Calculates the number of chars in the current line, including the trailing
  * \n if there is one, and allocates memory accordingly. */
 
-void	generate_line(char **line, t_list *stash)
+void	generate_line(char **line, t_list *list)
 {
 	int	i;
 	int	len;
 
 	len = 0;
-	while (stash)
+	while (list)
 	{
 		i = 0;
-		while (stash->content[i])
+		while (list->content[i])
 		{
-			if (stash->content[i] == '\n')
+			if (list->content[i] == '\n')
 			{
 				len++;
 				break ;
@@ -64,19 +64,19 @@ void	generate_line(char **line, t_list *stash)
 			len++;
 			i++;
 		}
-		stash = stash->next;
+		list = list->next;
 	}
 	*line = malloc(sizeof(char) * (len + 1));
 }
 
-/* Frees the entire stash. */
+/* Frees the entire list. */
 
-void	free_stash(t_list *stash)
+void	free_list(t_list *list)
 {
 	t_list	*current;
 	t_list	*next;
 
-	current = stash;
+	current = list;
 	while (current)
 	{
 		free(current->content);
