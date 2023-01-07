@@ -90,7 +90,7 @@ void	add_to_stash(t_list **stash, char *buf, int readed)
 		*stash = new_node;
 		return ;
 	}
-	last = ft_lst_get_last(*stash);
+	last = ft_get_last(*stash);
 	last->next = new_node;
 }
 
@@ -140,7 +140,7 @@ void	clean_stash(t_list **stash)
 	if (!stash || !clean_node)
 		return ;
 	clean_node->next = 0;
-	last = ft_lst_get_last(*stash);
+	last = ft_get_last(*stash);
 	i = 0;
 	while (last->content[i] && last->content[i] != '\n')
 		i++;
