@@ -54,7 +54,7 @@ void	lst_read(int fd, t_list **lst)
 			return ;
 		}
 		buf[i] = '\0';
-		lst_append(lst, buf, i);
+		lst_append(lst, buf, i, fd);
 		free(buf);
 	}
 }
@@ -142,6 +142,6 @@ void	lst_pop2(t_list **lst, int fd)
 	while (last->get[i])
 		clean_node->get[j++] = last->get[i++];
 	clean_node->get[j] = '\0';
-	lst_free(*lst);
+	lst_free(*lst, fd);
 	*lst = clean_node;
 }
