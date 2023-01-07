@@ -40,7 +40,7 @@ void	lst_read(int fd, t_list **lst)
 	int		i;
 
 	i = 1;
-	while (*lst && *lst->fd != fd)
+	while (*lst && (*lst)->fd != fd)
 		*lst = *lst->next;
 	while (!lst_contains(*lst, '\n', fd) && i)
 	{
