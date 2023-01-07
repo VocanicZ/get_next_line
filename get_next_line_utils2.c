@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line2.h"
+#include "get_next_line.h"
 
 int	found_newline(t_list *stash)
 {
