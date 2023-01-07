@@ -10,72 +10,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+#define BUFFER_SIZE 4096
 
 char *get_next_line(int fd) {
-  char *line = NULL;
-  size_t line_capacity = 0;
-  ssize_t line_length;
-  char buffer[BUFFER_SIZE];
-  size_t buffer_pos = 0;
+  static char buffer[BUFFER_SIZE];
+  static size_t index = BUFFER_SIZE;
+  static size_t length = 0;
 
-  while (1) {
-    ssize_t bytes_read = read(fd, buffer + buffer_pos, BUFFER_SIZE - buffer_pos);
-    if (bytes_read == -1) {
-      free(line);
-      return NULL;
-    } else if (bytes_read == 0) {
-      if (line == NULL) {
-        return NULL;
-      } else {
-        break;
-      }
+  // Read more data from the file descriptor if the buffer is empty
+  if (index >= length) {
+    index = 0;
+    length = read(fd, buffer, BUFFER_SIZE);
+    if (length == 0) {
+      return NULL; // EOF
     }
-
-    buffer_pos += bytes_read;
-
-    for (size_t i = 0; i < buffer_pos; i++) {
-      if (buffer[i] == '\n') {
-        line_length = i + 1;
-        line = realloc(line, line_capacity + line_length);
-        if (line == NULL) {
-          return NULL;
-        }
-        memcpy(line + line_capacity, buffer, line_length);
-        line_capacity += line_length;
-        memmove(buffer, buffer + line_length, buffer_pos - line_length);
-        buffer_pos -= line_length;
-        break;
-      }
-    }
-
-    if (buffer[buffer_pos - 1] == '\n') {
-      break;
-    }
-
-    line = realloc(line, line_capacity + BUFFER_SIZE);
-    if (line == NULL) {
-      return NULL;
-    }
-    memcpy(line + line_capacity, buffer, buffer_pos);
-    line_capacity += BUFFER_SIZE;
-    buffer_pos = 0;
   }
 
-  line = realloc(line, line_capacity + buffer_pos);
-  if (line == NULL) {
-    return NULL;
+  // Find the next newline character in the buffer
+  size_t start = index;
+  while (index < length && buffer[index] != '\n') {
+    index++;
   }
-  memcpy(line + line_capacity, buffer, buffer_pos);
-  line_capacity += buffer_pos;
 
-  line = realloc(line, line_capacity + 1);
-  if (line == NULL) {
-    return NULL;
-  }
-  line[line_capacity] = '\0';
+  // Create a new string for the line
+  size_t line_length = index - start;
+  char *line = malloc(line_length + 1);
+  strncpy(line, buffer + start, line_length);
+  line[line_length] = '\0';
+
+  // Advance the index past the newline character
+  index++;
 
   return line;
-  }
+}
