@@ -17,7 +17,7 @@ int	found_newline(t_list *stash)
 	int		i;
 	t_list	*current;
 
-	if (stash == NULL)
+	if (!stash)
 		return (0);
 	current = ft_lst_get_last(stash);
 	i = 0;
@@ -91,7 +91,7 @@ int	ft_strlen(const char *str)
 	int	len;
 
 	len = 0;
-	while (*(str++))
+	while (str[len])
 		len++;
 	return (len);
 }
