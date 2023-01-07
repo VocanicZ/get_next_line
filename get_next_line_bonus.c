@@ -67,7 +67,6 @@ void	lst_append(t_list **lst, char *buf, int readed)
 	if (!new_node)
 		return ;
 	new_node->next = 0;
-	new_node->fd = fd;
 	new_node->get = malloc(sizeof(char) * (readed + 1));
 	if (!new_node->get)
 		return ;

@@ -45,7 +45,7 @@ t_list	*lst_last(t_list *lst)
 	t_list	*cur;
 
 	cur = lst;
-	while (cur && cur->fd == fd && cur->next && cur->next->fd)
+	while (cur && cur->next)
 		cur = cur->next;
 	return (cur);
 }
@@ -57,7 +57,7 @@ void	ft_realloc(char **line, t_list *lst)
     char    *str;
 
 	len = 0;
-	while (lst && lst->fd == fd)
+	while (lst)
 	{
 		i = 0;
         str = lst->get;
