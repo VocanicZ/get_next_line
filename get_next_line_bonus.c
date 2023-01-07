@@ -41,7 +41,7 @@ void	lst_read(int fd, t_list **lst)
 
 	i = 1;
 	while (*lst && (*lst)->fd != fd)
-		*lst = *lst->next;
+		*lst = (*lst)->next;
 	while (!lst_contains(*lst, '\n', fd) && i)
 	{
 		buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));

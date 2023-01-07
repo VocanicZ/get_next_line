@@ -40,7 +40,7 @@ int	lst_contains(t_list *lst, char c, int fd)
 	return (0);
 }
 
-t_list	*lst_last(t_list *lst, fd)
+t_list	*lst_last(t_list *lst, int fd)
 {
 	t_list	*cur;
 

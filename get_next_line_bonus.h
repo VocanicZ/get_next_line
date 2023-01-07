@@ -29,7 +29,7 @@ typedef struct	s_list
 
 char	*get_next_line(int fd);
 int 	ft_strlen(const char *str);
-void	ft_realloc(char **line, t_list *lst);
+void	ft_realloc(char **line, t_list *lst, int fd);
 void	lst_read(int fd, t_list **lst);
 int 	lst_contains(t_list *lst, char c, int fd);
 void	lst_append(t_list **lst, char *buf, int readed, int fd);
