@@ -40,7 +40,7 @@ char	*get_next_line(int fd)
 
 /* Uses read() to add characters to the list */
 
-void	ft_read(int fd, t_list **list)
+void	lst_read(int fd, t_list **list)
 {
 	char	*buf;
 	int		readed;
