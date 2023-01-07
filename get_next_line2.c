@@ -25,7 +25,7 @@ char	*get_next_line(int fd)
 	if (!list)
 		return (0);
 	// 2. extract from list to line
-	extract_line(list, &line);
+	lst_get(list, &line);
 	// 3. clean up list
 	lst_clean(&list);
 	if (!line[0])
@@ -97,14 +97,14 @@ void	lst_append(t_list **list, char *buf, int readed)
 /* Extracts all characters from our list and stores them in out line.
  * stopping after the first \n it encounters */
 
-void	extract_line(t_list *list, char **line)
+void	lst_get(t_list *list, char **line)
 {
 	int	i;
 	int	j;
 
 	if (!list)
 		return ;
-	generate_line(line, list);
+	ft_realloc(line, list);
 	if (!*line)
 		return ;
 	j = 0;

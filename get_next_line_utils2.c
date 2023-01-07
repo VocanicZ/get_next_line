@@ -55,7 +55,7 @@ t_list	*lst_last(t_list *list)
 /* Calculates the number of chars in the current line, including the trailing
  * \n if there is one, and allocates memory accordingly. */
 
-void	generate_line(char **line, t_list *list)
+void	ft_realloc(char **line, t_list *list)
 {
 	int	i;
 	int	len;
