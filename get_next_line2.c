@@ -18,17 +18,17 @@ char	*get_next_line(int fd)
 	char			*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
-		return (NULL);
-	line = NULL;
+		return (0);
+	//line = NULL;
 	// 1. read from fd and add to linked list
 	read_and_stash(fd, &stash);
-	if (stash == NULL)
-		return (NULL);
+	if (!stash)
+		return (0);
 	// 2. extract from stash to line
 	extract_line(stash, &line);
 	// 3. clean up stash
 	clean_stash(&stash);
-	if (line[0] == '\0')
+	if (!line[0])
 	{
 		free_stash(stash);
 		stash = NULL;
