@@ -91,13 +91,13 @@ void	lst_pop(t_list *lst, char **line)
 	int	i;
 	int	j;
 
-	if (!list)
+	if (!lst)
 		return ;
 	ft_realloc(line, lst);
 	if (!*line)
 		return ;
 	j = 0;
-	while (list)
+	while (lst)
 	{
 		i = 0;
 		while (lst->get[i])
