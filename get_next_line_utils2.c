@@ -68,7 +68,7 @@ char    *ft_strjoin(char **s1, char **s2)
     printf("ft_strjoin: return(%s)\n", str);
     return (str);
 }
-
+/*
 char    *ft_strpop(char **s, int end)
 {
     printf("ft_strpop(%s, %d)\n", *s, end);
@@ -105,4 +105,4 @@ char    *ft_strpop(char **s, int end)
     *s = buffer;
     printf("ft_strpop: return(%s, %s)\n", pop, *s);
     return (pop);
-}
+}*/
