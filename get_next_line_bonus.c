@@ -32,7 +32,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
 		return (0);
 	lst_read(fd, &lst);
-	print_lst(lst);
+	//print_lst(lst);
 	if (!lst)
 		return (0);
 	lst_pop(lst, &line);
@@ -44,7 +44,7 @@ char	*get_next_line(int fd)
 		free(line);
 		return (NULL);
 	}
-	print_lst(lst);
+	//print_lst(lst);
 	return (line);
 }
 
@@ -94,9 +94,13 @@ void	lst_append(t_list **lst, char *buf, int readed)
 	if (!*lst)
 	{
 		*lst = new_node;
+		(*lst)->head = new_node;
+		(*lst)->tail = new_node;
 		return ;
 	}
-	last = lst_last(*lst);
+	last = (*lst)->tail;
+	new_node->head = last->head;
+	last->tail = new_node;
 	last->next = new_node;
 }
 
@@ -139,7 +143,8 @@ void	lst_pop2(t_list **lst)
 	if (!lst || !clean_node)
 		return ;
 	clean_node->next = 0;
-	last = lst_last(*lst);
+	last = (*lst)->tail;
+	//last = lst_last(*lst);
 	i = 0;
 	while (last->get[i] && last->get[i] != '\n')
 		i++;
