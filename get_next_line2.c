@@ -75,8 +75,8 @@ void	lst_append(t_list **list, char *buf, int readed)
 	if (!new_node)
 		return ;
 	new_node->next = 0;
-	new_node->content = malloc(sizeof(char) * (readed + 1));
-	if (!new_node->content)
+	new_node->get = malloc(sizeof(char) * (readed + 1));
+	if (!new_node->get)
 		return ;
 	i = 0;
 	while (buf[i] && i < readed)
@@ -84,7 +84,7 @@ void	lst_append(t_list **list, char *buf, int readed)
 		new_node->content[i] = buf[i];
 		i++;
 	}
-	new_node->content[i] = '\0';
+	new_node->get[i] = '\0';
 	if (!*list)
 	{
 		*list = new_node;
@@ -111,14 +111,14 @@ void	extract_line(t_list *list, char **line)
 	while (list)
 	{
 		i = 0;
-		while (list->content[i])
+		while (list->get[i])
 		{
-			if (list->content[i] == '\n')
+			if (list->get[i] == '\n')
 			{
-				(*line)[j++] = list->content[i];
+				(*line)[j++] = list->get[i];
 				break ;
 			}
-			(*line)[j++] = list->content[i++];
+			(*line)[j++] = list->get[i++];
 		}
 		list = list->next;
 	}
@@ -142,17 +142,17 @@ void	lst_clean(t_list **list)
 	clean_node->next = 0;
 	last = lst_last(*list);
 	i = 0;
-	while (last->content[i] && last->content[i] != '\n')
+	while (last->get[i] && last->get[i] != '\n')
 		i++;
-	if (last->content && last->content[i] == '\n')
+	if (last->get && last->get[i] == '\n')
 		i++;
-	clean_node->content = malloc(sizeof(char) * ((ft_strlen(last->content) - i) + 1));
-	if (!clean_node->content)
+	clean_node->get = malloc(sizeof(char) * ((ft_strlen(last->get) - i) + 1));
+	if (!clean_node->get)
 		return ;
 	j = 0;
-	while (last->content[i])
-		clean_node->content[j++] = last->content[i++];
-	clean_node->content[j] = '\0';
+	while (last->get[i])
+		clean_node->get[j++] = last->get[i++];
+	clean_node->get[j] = '\0';
 	lst_free(*list);
 	*list = clean_node;
 }

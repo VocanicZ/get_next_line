@@ -29,7 +29,7 @@ int	lst_contains(t_list *list, char c)
 
 	if (!list)
 		return (0);
-	str = lst_last(list)->content;
+	str = lst_last(list)->get;
 	i = 0;
 	while (str[i])
 	{
@@ -44,12 +44,12 @@ int	lst_contains(t_list *list, char c)
 
 t_list	*lst_last(t_list *list)
 {
-	t_list	*current;
+	t_list	*cur;
 
-	current = list;
-	while (current && current->next)
-		current = current->next;
-	return (current);
+	cur = list;
+	while (cur && cur->next)
+		cur = cur->next;
+	return (cur);
 }
 
 /* Calculates the number of chars in the current line, including the trailing
@@ -64,9 +64,9 @@ void	generate_line(char **line, t_list *list)
 	while (list)
 	{
 		i = 0;
-		while (list->content[i])
+		while (list->get[i])
 		{
-			if (list->content[i] == '\n')
+			if (list->get[i] == '\n')
 			{
 				len++;
 				break ;
@@ -83,15 +83,15 @@ void	generate_line(char **line, t_list *list)
 
 void	lst_free(t_list *list)
 {
-	t_list	*current;
+	t_list	*cur;
 	t_list	*next;
 
 	current = list;
-	while (current)
+	while (cur)
 	{
-		free(current->content);
-		next = current->next;
-		free(current);
-		current = next;
+		free(cur->get);
+		next = cur->next;
+		free(cur);
+		cur = next;
 	}
 }
