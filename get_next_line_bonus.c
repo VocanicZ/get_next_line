@@ -12,6 +12,18 @@
 
 #include "get_next_line_bonus.h"
 
+#include <stdio.h>
+
+void	print_lst(t_list *lst)
+{
+	while (lst)
+	{
+		printf("[%s]+", lst->get);
+		lst = lst->next;
+	}
+	printf("[end]\n");
+}
+
 char	*get_next_line(int fd)
 {
 	static	t_list	*lst;
@@ -45,7 +57,7 @@ void	lst_read(int fd, t_list **lst)
 		buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (!buf)
 			return ;
-		i = (int)read(fd, buf, BUFFER_SIZE);
+		i = read(fd, buf, BUFFER_SIZE);
 		if ((*lst == NULL && !i) || i == -1)
 		{
 			free(buf);
