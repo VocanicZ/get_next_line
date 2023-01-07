@@ -22,14 +22,14 @@ int	ft_strlen(const char *str)
 	return (len);
 }
 
-int	lst_contains(t_list *list, char c)
+int	lst_contains(t_list *lst, char c)
 {
 	int		i;
     char    *str;
 
-	if (!list)
+	if (!lst)
 		return (0);
-	str = lst_last(list)->get;
+	str = lst_last(lst)->get;
 	i = 0;
 	while (str[i])
 	{
@@ -40,33 +40,30 @@ int	lst_contains(t_list *list, char c)
 	return (0);
 }
 
-/* Returns a pointer to the last node in our list */
-
-t_list	*lst_last(t_list *list)
+t_list	*lst_last(t_list *lst)
 {
 	t_list	*cur;
 
-	cur = list;
+	cur = lst;
 	while (cur && cur->next)
 		cur = cur->next;
 	return (cur);
 }
 
-/* Calculates the number of chars in the current line, including the trailing
- * \n if there is one, and allocates memory accordingly. */
-
-void	ft_realloc(char **line, t_list *list)
+void	ft_realloc(char **line, t_list *lst)
 {
 	int	i;
 	int	len;
+    char    *str;
 
 	len = 0;
-	while (list)
+	while (lst)
 	{
 		i = 0;
-		while (list->get[i])
+        str = lst->get;
+		while (str[i])
 		{
-			if (list->get[i] == '\n')
+			if (str[i] == '\n')
 			{
 				len++;
 				break ;
@@ -74,19 +71,17 @@ void	ft_realloc(char **line, t_list *list)
 			len++;
 			i++;
 		}
-		list = list->next;
+		lst = lst->next;
 	}
 	*line = malloc(sizeof(char) * (len + 1));
 }
 
-/* Frees the entire list. */
-
-void	lst_free(t_list *list)
+void	lst_free(t_list *lst)
 {
 	t_list	*cur;
 	t_list	*next;
 
-	cur = list;
+	cur = lst;
 	while (cur)
 	{
 		free(cur->get);

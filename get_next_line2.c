@@ -14,58 +14,50 @@
 
 char	*get_next_line(int fd)
 {
-	static t_list	*list;
+	static t_list	*lst;
 	char			*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
 		return (0);
-	//line = NULL;
-	// 1. read from fd and add to linked list
-	lst_read(fd, &list);
-	if (!list)
+	lst_read(fd, &lst);
+	if (!lst)
 		return (0);
-	// 2. extract from list to line
-	lst_get(list, &line);
-	// 3. clean up list
-	lst_clean(&list);
+	lst_pop(lst, &line);
+	lst_pop2(&lst);
 	if (!line[0])
 	{
-		lst_free(list);
-		list = NULL;
+		lst_free(lst);
+		lst = 0;
 		free(line);
 		return (NULL);
 	}
 	return (line);
 }
 
-/* Uses read() to add characters to the list */
-
-void	lst_read(int fd, t_list **list)
+void	lst_read(int fd, t_list **lst)
 {
 	char	*buf;
-	int		readed;
+	int		i;
 
-	readed = 1;
-	while (!lst_contains(*list, '\n') && readed)
+	i = 1;
+	while (!lst_contains(*lst, '\n') && i)
 	{
 		buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (!buf)
 			return ;
-		readed = (int)read(fd, buf, BUFFER_SIZE);
-		if ((*list == NULL && !readed) || readed == -1)
+		i = (int)read(fd, buf, BUFFER_SIZE);
+		if ((*lst == NULL && !i) || i == -1)
 		{
 			free(buf);
 			return ;
 		}
-		buf[readed] = '\0';
-		lst_append(list, buf, readed);
+		buf[i] = '\0';
+		lst_append(lst, buf, i);
 		free(buf);
 	}
 }
 
-/* Adds the content of our buffer to the end of our list */
-
-void	lst_append(t_list **list, char *buf, int readed)
+void	lst_append(t_list **lst, char *buf, int readed)
 {
 	int		i;
 	t_list	*last;
@@ -85,51 +77,44 @@ void	lst_append(t_list **list, char *buf, int readed)
 		i++;
 	}
 	new_node->get[i] = '\0';
-	if (!*list)
+	if (!*lst)
 	{
 		*list = new_node;
 		return ;
 	}
-	last = lst_last(*list);
+	last = lst_last(*lst);
 	last->next = new_node;
 }
 
-/* Extracts all characters from our list and stores them in out line.
- * stopping after the first \n it encounters */
-
-void	lst_get(t_list *list, char **line)
+void	lst_pop(t_list *lst, char **line)
 {
 	int	i;
 	int	j;
 
 	if (!list)
 		return ;
-	ft_realloc(line, list);
+	ft_realloc(line, lst);
 	if (!*line)
 		return ;
 	j = 0;
 	while (list)
 	{
 		i = 0;
-		while (list->get[i])
+		while (lst->get[i])
 		{
-			if (list->get[i] == '\n')
+			if (lst->get[i] == '\n')
 			{
-				(*line)[j++] = list->get[i];
+				(*line)[j++] = lst->get[i];
 				break ;
 			}
-			(*line)[j++] = list->get[i++];
+			(*line)[j++] = lst->get[i++];
 		}
-		list = list->next;
+		lst = lst->next;
 	}
 	(*line)[j] = '\0';
 }
 
-/* After extracting the line that was read, we don't need those characters
- * anymore. This function clears the list so only the characters that have
- * not been returned at the end of get_next_line remain in our static list. */
-
-void	lst_clean(t_list **list)
+void	lst_pop2(t_list **lst)
 {
 	t_list	*last;
 	t_list	*clean_node;
@@ -137,10 +122,10 @@ void	lst_clean(t_list **list)
 	int		j;
 
 	clean_node = malloc(sizeof(t_list));
-	if (!list || !clean_node)
+	if (!lst || !clean_node)
 		return ;
 	clean_node->next = 0;
-	last = lst_last(*list);
+	last = lst_last(*lst);
 	i = 0;
 	while (last->get[i] && last->get[i] != '\n')
 		i++;
@@ -153,6 +138,6 @@ void	lst_clean(t_list **list)
 	while (last->get[i])
 		clean_node->get[j++] = last->get[i++];
 	clean_node->get[j] = '\0';
-	lst_free(*list);
-	*list = clean_node;
+	lst_free(*lst);
+	*lst = clean_node;
 }
