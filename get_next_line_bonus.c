@@ -32,6 +32,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
 		return (0);
 	lst_read(fd, &lst);
+	print_lst(lst);
 	if (!lst)
 		return (0);
 	lst_pop(lst, &line);
@@ -43,6 +44,7 @@ char	*get_next_line(int fd)
 		free(line);
 		return (NULL);
 	}
+	print_lst(lst);
 	return (line);
 }
 
