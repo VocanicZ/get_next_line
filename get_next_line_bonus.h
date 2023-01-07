@@ -23,7 +23,6 @@
 typedef struct	s_list
 {
 	char			*get;
-	struct s_list	*head;
 	struct s_list	*tail;
 	struct s_list	*next;
 }				t_list;
