@@ -21,7 +21,7 @@ size_t  ft_strlen(const char *s)
     i = 0;
     while (*s++)
         i++;
-    printf("ft_strlen: return(%d)\n", i);
+    printf("ft_strlen: return(%ld)\n", i);
     return (i);
 }
 
