@@ -81,7 +81,7 @@ void	lst_append(t_list **list, char *buf, int readed)
 	i = 0;
 	while (buf[i] && i < readed)
 	{
-		new_node->content[i] = buf[i];
+		new_node->get[i] = buf[i];
 		i++;
 	}
 	new_node->get[i] = '\0';

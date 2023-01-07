@@ -86,7 +86,7 @@ void	lst_free(t_list *list)
 	t_list	*cur;
 	t_list	*next;
 
-	current = list;
+	cur = list;
 	while (cur)
 	{
 		free(cur->get);
