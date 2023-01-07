@@ -10,99 +10,88 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line2.h"
 
-size_t  ft_strlen(const char *s)
+int	found_newline(t_list *stash)
 {
-    printf("ft_strlen(%s)\n", s);
+	int		i;
+	t_list	*current;
 
-    size_t  i;
-    
-    i = 0;
-    while (*s++)
-        i++;
-    printf("ft_strlen: return(%ld)\n", i);
-    return (i);
+	if (stash == NULL)
+		return (0);
+	current = ft_lst_get_last(stash);
+	i = 0;
+	while (current->content[i])
+	{
+		if (current->content[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
-int ft_strchr(const char *s, int c)
-{
-    printf("ft_strchr(%s, %c)\n", s, c);
-    int i;
+/* Returns a pointer to the last node in our stash */
 
-    i = 0;
-    while (*s && *s != c)
-    {
-        s++;
-        i++;
-    }
-    if (*s-- != c)
-    {
-        printf("ft_strchr: return(-1)\n");
-        return (-1);
-    }
-    printf("ft_strchr: return(%d)\n", i);
-    return (i);
+t_list	*ft_lst_get_last(t_list *stash)
+{
+	t_list	*current;
+
+	current = stash;
+	while (current && current->next)
+		current = current->next;
+	return (current);
 }
 
-char    *ft_strjoin(char **s1, char **s2)
-{
-    printf("ft_strjoin(%s, %s)\n", *s1, *s2);
-    char    *str;
-    size_t  i;
-    size_t  j;
+/* Calculates the number of chars in the current line, including the trailing
+ * \n if there is one, and allocates memory accordingly. */
 
-    str = malloc(sizeof(char) * (ft_strlen(*s1) + ft_strlen(*s2) + 1));
-    if (!str)
-        return (0);
-    i = 0;
-    j = 0;
-    while ((*s1)[j])
-        str[i++] = (*s1)[j++];
-    free(*s1);
-    j = 0;
-    while ((*s2)[j])
-        str[i++] = (*s2)[j++];
-    free(*s2);
-    str[i] = 0;
-    printf("ft_strjoin: return(%s)\n", str);
-    return (str);
+void	generate_line(char **line, t_list *stash)
+{
+	int	i;
+	int	len;
+
+	len = 0;
+	while (stash)
+	{
+		i = 0;
+		while (stash->content[i])
+		{
+			if (stash->content[i] == '\n')
+			{
+				len++;
+				break ;
+			}
+			len++;
+			i++;
+		}
+		stash = stash->next;
+	}
+	*line = malloc(sizeof(char) * (len + 1));
 }
-/*
-char    *ft_strpop(char **s, int end)
-{
-    printf("ft_strpop(%s, %d)\n", *s, end);
-    int i;
-    int j;
-    char    *pop;
-    char    *buffer;
 
-    pop = malloc(sizeof(char) * (end + 1));
-    if (!pop)
-        return (0);
-    i = 0;
-    while ((*s)[i] && i < end)
-    {
-        printf("ft_strpop(%c && %d < %d)\n", (*s)[i], i, end);
-        pop[i] = (*s)[i++];
-    }
-    pop[i] = 0;
-    printf("ft_strpop(pop = %s, i = %d)\n", pop, i);
-    i = ft_strlen(*s) - end - 1;
-    if (!i)
-    {
-        free(*s);
-        *s = "";
-    }
-    buffer = malloc(sizeof(char) * (i + 1));
-    if (!buffer)
-        return (0);
-    j = 0;
-    while (j < i)
-        buffer[j++] = (*s)[++end + i];
-    buffer[j] = 0;
-    free(*s);
-    *s = buffer;
-    printf("ft_strpop: return(%s, %s)\n", pop, *s);
-    return (pop);
-}*/
+/* Frees the entire stash. */
+
+void	free_stash(t_list *stash)
+{
+	t_list	*current;
+	t_list	*next;
+
+	current = stash;
+	while (current)
+	{
+		free(current->content);
+		next = current->next;
+		free(current);
+		current = next;
+	}
+}
+
+int	ft_strlen(const char *str)
+{
+	int	len;
+
+	len = 0;
+	while (*(str++))
+		len++;
+	return (len);
+}
