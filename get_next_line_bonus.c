@@ -18,7 +18,7 @@ void	print_lst(t_list *lst)
 {
 	while (lst)
 	{
-		printf("[%s|t:%s|]+", lst->get, lst->tail->get);
+		printf("[\t%s\tt:%s]\n", lst->get, lst->tail->get);
 		lst = lst->next;
 	}
 	printf("[end]\n");
