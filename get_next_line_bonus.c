@@ -94,10 +94,10 @@ void	lst_append(t_list **lst, char *buf, int readed)
 	if (!*lst)
 	{
 		*lst = new_node;
-		(*lst)->tail = new_node;
 		return ;
 	}
 	last = (*lst)->tail;
+	(*lst)->tail = new_node;
 	new_node->tail = new_node;
 	last->tail = new_node;
 	last->next = new_node;
