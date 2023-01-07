@@ -12,18 +12,28 @@
 
 #include "get_next_line.h"
 
+int	ft_strlen(const char *str)
+{
+	int	len;
+
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
+}
+
 int	lst_contains(t_list *list, char c)
 {
 	int		i;
-	t_list	*current;
+    char    *str;
 
 	if (!list)
 		return (0);
-	current = lst_last(list);
+	str = lst_last(list)->content;
 	i = 0;
-	while (current->content[i])
+	while (str[i])
 	{
-		if (current->content[i] == c)
+		if (str[i] == c)
 			return (1);
 		i++;
 	}
@@ -84,14 +94,4 @@ void	lst_free(t_list *list)
 		free(current);
 		current = next;
 	}
-}
-
-int	ft_strlen(const char *str)
-{
-	int	len;
-
-	len = 0;
-	while (str[len])
-		len++;
-	return (len);
 }
