@@ -10,67 +10,76 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include <stdlib.h>
+#include <unistd.h>
 
-static char *st_backup(char *str)
-{
-    static char *backup;
+char *get_next_line(int fd) {
+  char *line = NULL;
+  size_t line_capacity = 0;
+  ssize_t line_length;
+  char buffer[BUFFER_SIZE];
+  size_t buffer_pos = 0;
 
-    if (!backup)
-        backup = "";
-    if (str)
-        backup = str;
-    return (backup);
-}
-
-static char *st_buffer(int fd)
-{
-    char    *str;
-    int     size;
-
-    str = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-    if (!str)
-        return (0);
-    size = read(fd, str, BUFFER_SIZE);
-    if (size <= 0)
-    {
-        free(str);
-        if (size == 0)
-            return ("");
-        return (0);
+  while (1) {
+    ssize_t bytes_read = read(fd, buffer + buffer_pos, BUFFER_SIZE - buffer_pos);
+    if (bytes_read == -1) {
+      perror("read failed");
+      free(line);
+      return NULL;
+    } else if (bytes_read == 0) {
+      if (line == NULL) {
+        return NULL;
+      } else {
+        break;
+      }
     }
-    str[size] = 0;
-    return (str);
-}
 
-char    *get_next_line(int fd)
-{
-    char    *buffer;
-    char    *backup;
-    int     end;
+    buffer_pos += bytes_read;
 
-    backup = st_backup(0);
-    end = ft_strchr(backup, '\n');
-    while (end == -1)
-    {
-        buffer = st_buffer(fd);
-        if (!buffer)
-            return (0);
-        if (buffer == "")
-        {
-            if (backup == "")
-                return (0);
-            break;
+    for (size_t i = 0; i < buffer_pos; i++) {
+      if (buffer[i] == '\n') {
+        line_length = i + 1;
+        line = realloc(line, line_capacity + line_length);
+        if (line == NULL) {
+          perror("realloc failed");
+          return NULL;
         }
-        backup = ft_strjoin(&backup, &buffer);
-        end = ft_strchr(backup, '\n');
+        memcpy(line + line_capacity, buffer, line_length);
+        line_capacity += line_length;
+        memmove(buffer, buffer + line_length, buffer_pos - line_length);
+        buffer_pos -= line_length;
+        break;
+      }
     }
-    if (end == -1)
-    {
-        st_backup("");
-        return (backup);
+
+    if (buffer[buffer_pos - 1] == '\n') {
+      break;
     }
-    buffer = ft_strpop(&backup, end);
-    st_backup(backup);
-    return (buffer);
-}
+
+    line = realloc(line, line_capacity + BUFFER_SIZE);
+    if (line == NULL) {
+      perror("realloc failed");
+      return NULL;
+    }
+    memcpy(line + line_capacity, buffer, buffer_pos);
+    line_capacity += BUFFER_SIZE;
+    buffer_pos = 0;
+  }
+
+  line = realloc(line, line_capacity + buffer_pos);
+  if (line == NULL) {
+    perror("realloc failed");
+    return NULL;
+  }
+  memcpy(line + line_capacity, buffer, buffer_pos);
+  line_capacity += buffer_pos;
+
+  line = realloc(line, line_capacity + 1);
+  if (line == NULL) {
+    perror("realloc failed");
+    return NULL;
+  }
+  line[line_capacity] = '\0';
+
+  return line;
+  }
