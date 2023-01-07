@@ -30,13 +30,13 @@ typedef struct	s_list
 }				t_list;
 
 char	*get_next_line(int fd);
-int 	ft_contains(t_list *list);
+int 	ft_contains(t_list *list, char c);
 t_list	*ft_get_last(t_list *list);
 void	read_and_list(int fd, t_list **list);
 void	add_to_list(t_list **list, char *buf, int readed);
 void	extract_line(t_list *list, char **line);
 void	generate_line(char **line, t_list *list);
-void	clean_list(t_list **list);
+void	ft_clean(t_list **list);
 int 	ft_strlen(const char *str);
 void	free_list(t_list *list);
 #endif
