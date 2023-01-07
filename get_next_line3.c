@@ -85,7 +85,7 @@ char *get_next_line2(int fd)
     return (NULL);
 }
 
-char *get_next_line(int fd)
+char *get_next_line3(int fd)
 {
     static char *data[2];
     size_t i;
@@ -131,4 +131,22 @@ char *get_next_line(int fd)
     free(data[0]);
     free(data[1]);
     return (NULL);
+}
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+char *get_next_line(int fd) {
+  char *line = NULL;
+  size_t line_capacity = 0;
+  ssize_t line_length;
+
+  line_length = getline(&line, &line_capacity, fd);
+  if (line_length == -1) {
+    free(line);
+    return NULL;
+  }
+
+  return line;
 }
