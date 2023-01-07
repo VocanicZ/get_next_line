@@ -46,7 +46,7 @@ void	ft_read(int fd, t_list **list)
 	int		readed;
 
 	readed = 1;
-	while (!ft_contains(*list, '\n') && readed)
+	while (!lst_contains(*list, '\n') && readed)
 	{
 		buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (!buf)
@@ -153,6 +153,6 @@ void	lst_clean(t_list **list)
 	while (last->content[i])
 		clean_node->content[j++] = last->content[i++];
 	clean_node->content[j] = '\0';
-	free_list(*list);
+	lst_free(*list);
 	*list = clean_node;
 }

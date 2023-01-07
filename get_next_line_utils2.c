@@ -19,7 +19,7 @@ int	lst_contains(t_list *list, char c)
 
 	if (!list)
 		return (0);
-	current = ft_get_last(list);
+	current = lst_last(list);
 	i = 0;
 	while (current->content[i])
 	{
