@@ -79,7 +79,7 @@ void	lst_append(t_list **lst, char *buf, int readed)
 	new_node->get[i] = '\0';
 	if (!*lst)
 	{
-		*list = new_node;
+		*lst = new_node;
 		return ;
 	}
 	last = lst_last(*lst);
