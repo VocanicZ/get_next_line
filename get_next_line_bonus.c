@@ -18,7 +18,7 @@ void	print_lst(t_list *lst)
 {
 	while (lst)
 	{
-		printf("[%s{t:%s}]+", lst->get, lst->tail->get);
+		printf("[%s|t:%s|]+", lst->get, lst->tail->get);
 		lst = lst->next;
 	}
 	printf("[end]\n");
@@ -94,6 +94,7 @@ void	lst_append(t_list **lst, char *buf, int readed)
 	if (!*lst)
 	{
 		*lst = new_node;
+		(*lst)->tail = new_node;
 		return ;
 	}
 	last = (*lst)->tail;
@@ -156,6 +157,7 @@ void	lst_pop2(t_list **lst)
 	while (last->get[i])
 		clean_node->get[j++] = last->get[i++];
 	clean_node->get[j] = '\0';
+	clean_node->tail = last;
 	lst_free(*lst);
 	*lst = clean_node;
 }
