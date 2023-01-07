@@ -85,7 +85,6 @@ void	lst_free(t_list *lst, int fd)
 	while (cur && cur->fd == fd)
 	{
 		free(cur->get);
-		free(&cur->fd);
 		next = cur->next;
 		free(cur);
 		cur = next;
