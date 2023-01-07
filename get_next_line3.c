@@ -56,7 +56,7 @@ static char *read_line(int fd, char *line, size_t size, size_t *i, ssize_t *n, c
     return (line);
 }
 
-char *get_next_line(int fd)
+char *get_next_line2(int fd)
 {
     char *data[2];
     size_t i;
@@ -85,3 +85,50 @@ char *get_next_line(int fd)
     return (NULL);
 }
 
+char *get_next_line(int fd)
+{
+    static char *data[2];
+    size_t i;
+    ssize_t n;
+
+    data[0] = malloc(BUFFER_SIZE);
+    if (data[0] == NULL)
+        return (NULL);
+    data[1] = malloc(BUFFER_SIZE + 1);
+    if (data[1] == NULL)
+        return (NULL);
+    i = 0;
+    while ((n = read(fd, data[1], BUFFER_SIZE)) > 0)
+    {
+        data[1][n] = '\0';
+        for (int j = 0; j < n; j++)
+        {
+            if (data[1][j] == '\n')
+            {
+                data[0][i] = '\0';
+                return (data[0]);
+            }
+            data[0][i++] = data[1][j];
+            if (i == BUFFER_SIZE)
+            {
+                data[0] = reallocate_line_buffer(data[0], i + BUFFER_SIZE);
+                if (!data[0])
+                    return (NULL);
+            }
+        }
+    }
+    if (n < 0)
+    {
+        free(data[0]);
+        free(data[1]);
+        return (NULL);
+    }
+    if (i > 0 || (i == 0 && n == 1))
+    {
+        data[0][i] = '\0';
+        return (data[0]);
+    }
+    free(data[0]);
+    free(data[1]);
+    return (NULL);
+}
