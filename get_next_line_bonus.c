@@ -44,7 +44,7 @@ char	*get_next_line(int fd)
 		lst->index = 0;
 		lst->next = NULL;
 	}
-	lst_pop(lst, &line);
+	lst_pop(lst, &line, fd);
 	if (!line[0])
 	{
 		free(lst->get);
@@ -56,7 +56,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-void	lst_pop(t_list *lst, char **line)
+void	lst_pop(t_list *lst, char **line, int fd)
 {
 	int	i;
 	int	j;
