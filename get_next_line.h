@@ -17,7 +17,7 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 4096
 # endif
 
 typedef struct	s_list
@@ -29,11 +29,10 @@ typedef struct	s_list
 char	*get_next_line(int fd);
 int 	ft_strlen(const char *str);
 void	ft_realloc(char **line, t_list *lst);
-void	lst_read(int fd, t_list **lst);
+void	lst_read(int fd, t_list **lst, t_list **last);
 int 	lst_contains(t_list *lst, char c);
-void	lst_append(t_list **lst, char *buf, int readed);
-t_list	*lst_last(t_list *lst);
+void	lst_append(t_list **lst, char *buf, int readed, t_list **last);
 void	lst_pop(t_list *lst, char **line);
-void	lst_pop2(t_list **lst);
+void	lst_pop2(t_list **lst, t_list **last);
 void	lst_free(t_list *lst);
 #endif
