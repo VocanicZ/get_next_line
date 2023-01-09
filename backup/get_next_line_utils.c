@@ -22,7 +22,7 @@ int	ft_strlen(const char *str)
 	return (len);
 }
 
-int	lst_contains(t_list *lst, char c)
+int	lst_contains(t_list *lst, char c, int mode)
 {
 	int		i;
     char    *str;
@@ -34,9 +34,15 @@ int	lst_contains(t_list *lst, char c)
 	while (str[i])
 	{
 		if (str[i] == c)
+		{
+			if (mode)
+				return (i);
 			return (1);
+		}
 		i++;
 	}
+	if (mode)
+		return (i);
 	return (0);
 }
 
