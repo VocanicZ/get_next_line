@@ -119,26 +119,37 @@ void	lst_pop(t_list *lst, char **line)
 
 void	lst_pop2(t_list **lst, t_list **last)
 {
-	t_list	*clean_node;
+	t_list	*new_node;
 	int		i;
 	int		j;
 
-	clean_node = malloc(sizeof(t_list));
-	if (!lst || !clean_node)
+	new_node = malloc(sizeof(t_list));
+	if (!lst || !clean)
 		return ;
-	clean_node->next = 0;
+	new_node->next = 0;
+
+	i = 0;
+	while ((*last)->get[i] && (*last)->get[i] != '\n')
+		i++;
+	printf("corr i -> %d\n", i);
+	if ((*last)->get && (*last)->get[i] == '\n')
+		i++;
+	printf("corr new i -> %d\n", i);
+
 	i = lst_contains(*last, '\n', 1);
 	printf("i -> %d\n", i);
 	if ((*last)->get && ((*last)->get[i] == '\n'))
 		i++;
 	printf("new i -> %d\n", i);
-	clean_node->get = malloc(sizeof(char) * ((ft_strlen((*last)->get) - i) + 1));
+
+
+	new_node->get = malloc(sizeof(char) * ((ft_strlen((*last)->get) - i) + 1));
 	if (!clean_node->get)
 		return ;
 	j = 0;
 	while ((*last)->get[i])
-		clean_node->get[j++] = (*last)->get[i++];
-	clean_node->get[j] = '\0';
+		new_node->get[j++] = (*last)->get[i++];
+	new_node->get[j] = '\0';
 	lst_free(*lst);
 	*lst = clean_node;
 	*last = clean_node;
