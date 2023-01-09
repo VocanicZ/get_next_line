@@ -41,13 +41,13 @@ void	lst_read(int fd, t_list **lst, t_list **last)
 	int		i;
 
 	i = 1;
-	while (!lst_contains(*last/*lst*/, '\n') && i)
+	while (!lst_contains(*last, '\n') && i)
 	{
 		buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (!buf)
 			return ;
-		i = (int)read(fd, buf, BUFFER_SIZE);
-		if ((*last/*lst*/ == NULL && !i) || i == -1)
+		i = read(fd, buf, BUFFER_SIZE);
+		if ((!*last && !i) || i == -1)
 		{
 			free(buf);
 			return ;
@@ -61,7 +61,6 @@ void	lst_read(int fd, t_list **lst, t_list **last)
 void	lst_append(t_list **lst, char *buf, int readed, t_list **last)
 {
 	int		i;
-	//t_list	*last;
 	t_list	*new_node;
 
 	new_node = malloc(sizeof(t_list));
@@ -84,7 +83,6 @@ void	lst_append(t_list **lst, char *buf, int readed, t_list **last)
 		*last = new_node;
 		return ;
 	}
-	//last = lst_last(*lst);
 	(*last)->next = new_node;
 	(*last) = new_node;
 }
@@ -119,7 +117,6 @@ void	lst_pop(t_list *lst, char **line)
 
 void	lst_pop2(t_list **lst, t_list **last)
 {
-	//t_list	*last;
 	t_list	*clean_node;
 	int		i;
 	int		j;
@@ -128,7 +125,6 @@ void	lst_pop2(t_list **lst, t_list **last)
 	if (!lst || !clean_node)
 		return ;
 	clean_node->next = 0;
-	//last = lst_last(*lst);
 	i = 0;
 	while ((*last)->get[i] && (*last)->get[i] != '\n')
 		i++;
