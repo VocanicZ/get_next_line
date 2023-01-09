@@ -69,7 +69,7 @@ void	ft_realloc(char **line, t_list *lst)
 		}
 		lst = lst->next;
 	}
-	*line = malloc(sizeof(char) * (len + 1));
+	*line = (char *) malloc(sizeof(char) * (len + 1));
 }
 
 void	lst_free(t_list *lst)
