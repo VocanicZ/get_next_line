@@ -34,7 +34,11 @@ int	lst_contains(t_list *lst, char c, int mode)
 	while (str[i])
 	{
 		if (str[i] == c)
-			return (i);
+		{
+			if (mode)
+				return (i);
+			return (1);
+		}
 		i++;
 	}
 	if (mode)
