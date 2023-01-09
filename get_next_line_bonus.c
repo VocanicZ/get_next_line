@@ -143,4 +143,5 @@ void	lst_pop2(t_list **lst, t_list **last)
 	clean_node->get[j] = '\0';
 	lst_free(*lst);
 	*lst = clean_node;
+	*last = clean_node;
 }
