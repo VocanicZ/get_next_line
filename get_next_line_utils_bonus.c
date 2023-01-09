@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 int	ft_strlen(const char *str)
 {
@@ -29,8 +29,7 @@ int	lst_contains(t_list *lst, char c)
 
 	if (!lst)
 		return (0);
-	str = lst->tail->get;
-	//str = lst_last(lst)->get;
+	str = lst_last(lst)->get;
 	i = 0;
 	while (str[i])
 	{
