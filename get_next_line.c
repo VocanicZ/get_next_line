@@ -41,7 +41,7 @@ void	lst_read(int fd, t_list **lst, t_list **last)
 	int		i;
 
 	i = 1;
-	while (!lst_contains(*last, '\n') && i)
+	while (!lst_contains(*last, '\n', 0) && i)
 	{
 		buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (!buf)
@@ -125,7 +125,7 @@ void	lst_pop2(t_list **lst, t_list **last)
 	if (!lst || !clean_node)
 		return ;
 	clean_node->next = 0;
-	i = lst_contains(*last, '\n');
+	i = lst_contains(*last, '\n', 1);
 	if ((*last)->get && (*last)->get[i] == '\n')
 		i++;
 	clean_node->get = malloc(sizeof(char) * ((ft_strlen((*last)->get) - i) + 1));
