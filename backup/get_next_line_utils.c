@@ -29,7 +29,7 @@ int	lst_contains(t_list *lst, char c)
 
 	if (!lst)
 		return (0);
-	str = lst_last(lst)->get;
+	//str = lst_last(lst)->get;
 	i = 0;
 	while (str[i])
 	{
