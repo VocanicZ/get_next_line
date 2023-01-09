@@ -144,13 +144,13 @@ void	lst_pop2(t_list **lst, t_list **last)
 
 
 	new_node->get = malloc(sizeof(char) * ((ft_strlen((*last)->get) - i) + 1));
-	if (!clean_node->get)
+	if (!new_node->get)
 		return ;
 	j = 0;
 	while ((*last)->get[i])
 		new_node->get[j++] = (*last)->get[i++];
 	new_node->get[j] = '\0';
 	lst_free(*lst);
-	*lst = clean_node;
-	*last = clean_node;
+	*lst = new_node;
+	*last = new_node;
 }
