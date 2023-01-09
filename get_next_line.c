@@ -125,10 +125,9 @@ void	lst_pop2(t_list **lst, t_list **last)
 	if (!lst || !clean_node)
 		return ;
 	clean_node->next = 0;
-	i = 0;
-	j = lst_contains(*last, '\n');
-	if (j > 0)
-		i += j + 1;
+	i = lst_contains(*last, '\n');
+	if ((*last)->get (*last)->get[i] == '\n')
+		i++;
 	clean_node->get = malloc(sizeof(char) * ((ft_strlen((*last)->get) - i) + 1));
 	if (!clean_node->get)
 		return ;
