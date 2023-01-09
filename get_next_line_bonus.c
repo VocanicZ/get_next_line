@@ -81,6 +81,7 @@ void	lst_append(t_list **lst, char *buf, int readed, t_list **last)
 	if (!*lst)
 	{
 		*lst = new_node;
+		*last = new_node;
 		return ;
 	}
 	//last = lst_last(*lst);
