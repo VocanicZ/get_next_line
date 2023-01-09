@@ -23,8 +23,11 @@
 typedef struct	s_list
 {
 	char			*get;
+	int				index;
 	struct s_list	*next;
 }				t_list;
 
 char	*get_next_line(int fd);
+void	lst_pop(t_list *lst, char **line)
+void	ft_realloc(char **line, t_list *lst)
 #endif
