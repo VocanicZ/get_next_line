@@ -115,6 +115,8 @@ void	lst_pop(t_list *lst, char **line)
 	(*line)[j] = '\0';
 }
 
+#include <stdio.h>
+
 void	lst_pop2(t_list **lst, t_list **last)
 {
 	t_list	*clean_node;
@@ -126,10 +128,10 @@ void	lst_pop2(t_list **lst, t_list **last)
 		return ;
 	clean_node->next = 0;
 	i = lst_contains(*last, '\n', 1);
-	printf("i -> %d\n", i)
+	printf("i -> %d\n", i);
 	if ((*last)->get (*last->get[i] == '\n')
 		i++;
-	printf("new i -> %d\n", i)
+	printf("new i -> %d\n", i);
 	clean_node->get = malloc(sizeof(char) * ((ft_strlen((*last)->get) - i) + 1));
 	if (!clean_node->get)
 		return ;
