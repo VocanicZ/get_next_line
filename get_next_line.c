@@ -63,7 +63,7 @@ void	lst_append(t_list **lst, char *buf, int readed, t_list **last)
 	int		i;
 	t_list	*new_node;
 
-	new_node = (t_list) malloc(sizeof(t_list));
+	new_node = malloc(sizeof(t_list));
 	if (!new_node)
 		return ;
 	new_node->next = 0;
@@ -121,7 +121,7 @@ void	lst_pop2(t_list **lst, t_list **last)
 	int		i;
 	int		j;
 
-	new_node = (t_list) malloc(sizeof(t_list));
+	new_node = malloc(sizeof(t_list));
 	if (!lst || !new_node)
 		return ;
 	new_node->next = 0;
