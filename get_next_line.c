@@ -124,7 +124,7 @@ void	lst_pop2(t_list **lst, t_list **last)
 	int		j;
 
 	new_node = malloc(sizeof(t_list));
-	if (!lst || !clean)
+	if (!lst || !new_node)
 		return ;
 	new_node->next = 0;
 
