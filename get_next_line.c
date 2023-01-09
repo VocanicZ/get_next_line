@@ -128,6 +128,12 @@ void	lst_pop2(t_list **lst, t_list **last)
 		return ;
 	new_node->next = 0;
 
+	i = lst_contains(*last, '\n', 1);
+	printf("i -> %d\n", i);
+	if ((*last)->get && ((*last)->get[i] == '\n'))
+		i++;
+	printf("new i -> %d\n", i);
+
 	i = 0;
 	while ((*last)->get[i] && (*last)->get[i] != '\n')
 		i++;
@@ -135,13 +141,6 @@ void	lst_pop2(t_list **lst, t_list **last)
 	if ((*last)->get && (*last)->get[i] == '\n')
 		i++;
 	printf("corr new i -> %d\n", i);
-
-	i = lst_contains(*last, '\n', 1);
-	printf("i -> %d\n", i);
-	if ((*last)->get && ((*last)->get[i] == '\n'))
-		i++;
-	printf("new i -> %d\n", i);
-
 
 	new_node->get = malloc(sizeof(char) * ((ft_strlen((*last)->get) - i) + 1));
 	if (!new_node->get)
