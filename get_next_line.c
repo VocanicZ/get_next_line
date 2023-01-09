@@ -127,13 +127,13 @@ void	lst_pop2(t_list **lst, t_list **last)
 	if (!lst || !new_node)
 		return ;
 	new_node->next = 0;
-
+	/*
 	i = lst_contains(*last, '\n', 1);
 	printf("i -> %d\n", i);
 	if ((*last)->get && ((*last)->get[i] == '\n'))
 		i++;
 	printf("new i -> %d\n", i);
-
+	*/
 	i = 0;
 	while ((*last)->get[i] && (*last)->get[i] != '\n')
 		i++;
