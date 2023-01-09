@@ -118,7 +118,7 @@ void	lst_pop(t_list *lst, char **line)
 
 void	lst_pop2(t_list **lst, t_list **last)
 {
-	t_list	*last;
+	//t_list	*last;
 	t_list	*clean_node;
 	int		i;
 	int		j;
