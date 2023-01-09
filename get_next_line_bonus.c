@@ -24,7 +24,7 @@ char	*get_next_line(int fd)
 	if (!lst)
 		return (0);
 	lst_pop(lst, &line);
-	lst_pop2(&lst);
+	lst_pop2(&lst, &last);
 	if (!line[0])
 	{
 		lst_free(lst);
