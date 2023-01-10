@@ -28,8 +28,8 @@ typedef struct	s_list
 
 typedef struct z_list
 {
-	struct t_list	*first;
-	struct t_list	*last;
+	struct s_list	*first;
+	struct s_list	*last;
 }	z_list;
 
 
