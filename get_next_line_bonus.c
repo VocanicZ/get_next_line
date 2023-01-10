@@ -79,8 +79,8 @@ void	lst_append(char *buf, int readed, z_list **data)
 	new_node->get[i] = '\0';
 	if (!*data)
 	{
-		*data = malloc(sizeof(z_list) * 2);
-		if (!data)
+		*data = malloc(sizeof(z_list));
+		if (!*data)
 			return ;
 		(*data)->first = new_node;
 		(*data)->last =new_node;
