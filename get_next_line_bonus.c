@@ -14,8 +14,8 @@
 
 char	*get_next_line(int fd)
 {
-	struct z_list	*ptr;
-	char			*line;
+	static struct z_list	*ptr;
+	char					*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
 		return (0);
