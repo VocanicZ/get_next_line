@@ -14,108 +14,131 @@
 
 char	*get_next_line(int fd)
 {
-	static t_list	*lst;
+	struct z_list	*ptr;
 	char			*line;
-	int				i;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
 		return (0);
-	if (!lst)
-	{
-		lst = malloc(sizeof(t_list));
-		if (!lst)
-			return (NULL);
-		lst->get = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		if (!lst->get)
-		{
-			free(lst);
-			lst = NULL;
-			return (NULL);
-		}
-		i = read(fd, lst->get, BUFFER_SIZE);
-		if (i <= 0)
-		{
-			free(lst->get);
-			free(lst);
-			lst = NULL;
-			return (NULL);
-		}
-		lst->get[i] = '\0';
-		lst->index = 0;
-		lst->next = NULL;
-	}
-	lst_pop(lst, &line, fd);
+	
+	lst_read(fd, &ptr);
+	if (!ptr)
+		return (0);
+	lst_pop(ptr, &line);
+	lst_pop2(&ptr);
 	if (!line[0])
 	{
-		free(lst->get);
-		free(lst);
-		lst = NULL;
+		lst_free(ptr);
+		ptr = 0;
 		free(line);
 		return (NULL);
 	}
 	return (line);
 }
 
-void	lst_pop(t_list *lst, char **line, int fd)
+void	lst_read(int fd, z_list **data)
+{
+	char	*buf;
+	int		i;
+
+	i = 1;
+	while (!lst_contains((*data)->last, '\n', 0) && i)
+	{
+		buf = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		if (!buf)
+			return ;
+		i = read(fd, buf, BUFFER_SIZE);
+		if ((!(*data)->last && !i) || i == -1)
+		{
+			free(buf);
+			return ;
+		}
+		buf[i] = '\0';
+		lst_append(buf, i, data);
+		free(buf);
+	}
+}
+
+void	lst_append(char *buf, int readed, z_list **data)
+{
+	int		i;
+	t_list	*new_node;
+
+	new_node = malloc(sizeof(t_list));
+	if (!new_node)
+		return ;
+	new_node->next = 0;
+	new_node->get = (char *) malloc(sizeof(char) * (readed + 1));
+	if (!new_node->get)
+		return ;
+	i = 0;
+	while (buf[i] && i < readed)
+	{
+		new_node->get[i] = buf[i];
+		i++;
+	}
+	new_node->get[i] = '\0';
+	if (!*data)
+	{
+		*data = malloc(sizeof(z_list) * 2);
+		if (!data)
+			return (0)
+		(*data)->first = new_node;
+		(*data)->last =new_node;
+		return ;
+	}
+	(*data)->last->next = new_node;
+	(*data)->last = new_node;
+}
+
+void	lst_pop(z_list *data, char **line)
 {
 	int	i;
 	int	j;
 
-	if (!lst)
+	if (!data->first)
 		return ;
-	ft_realloc(line, lst);
+	ft_realloc(line, data->first);
 	if (!*line)
 		return ;
 	j = 0;
-	while (lst)
+	while (data->first)
 	{
-		i = lst->index;
-		while (lst->get[i])
+		i = 0;
+		while (data->first->get[i])
 		{
-			if (lst->get[i] == '\n')
+			if (data->first->get[i] == '\n')
 			{
-				(*line)[j++] = lst->get[i];
+				(*line)[j++] = data->first->get[i];
 				break ;
 			}
-			(*line)[j++] = lst->get[i++];
+			(*line)[j++] = data->first->get[i++];
 		}
-		if (lst->get[i] == '\n')
-		{
-			lst->index = i + 1;
-			break ;
-		}
-		if (lst->get[i] == '\0')
-		{
-			if (read(fd, lst->get, BUFFER_SIZE) <= 0)
-				break ;
-			lst->index = 0;
-		}
+		data->first = data->first->next;
 	}
 	(*line)[j] = '\0';
 }
 
-void	ft_realloc(char **line, t_list *lst)
+void	lst_pop2(z_list	**data)
 {
-	int	i;
-	int	len;
-    char    *str;
+	t_list	*new_node;
+	int		i;
+	int		j;
 
-	len = 0;
-	while (lst)
-	{
-		i = 0;
-        str = lst->get;
-		while (str[i])
-		{
-			if (str[i] == '\n')
-			{
-				len++;
-				break ;
-			}
-			len++;
-			i++;
-		}
-		lst = lst->next;
-	}
-	*line = malloc(sizeof(char) * (len + 1));
+	new_node = malloc(sizeof(t_list));
+	if (!data || !new_node)
+		return ;
+	new_node->next = 0;
+	i = lst_contains((*data)->last, '\n', 1);
+	if ((*data)->last->get && ((*data)->last->get[i] == '\n'))
+		i++;
+	new_node->get = (char *) malloc(sizeof(char) * ((ft_strlen((*data)->last->get) - i) + 1));
+	if (!new_node->get)
+		return ;
+	j = 0;
+	while ((*data)->last->get[i])
+		new_node->get[j++] = (*data)->last->get[i++];
+	new_node->get[j] = '\0';
+	lst_free(*data);
+	(*data)->first = new_node;
+	(*data)->last = new_node;
 }

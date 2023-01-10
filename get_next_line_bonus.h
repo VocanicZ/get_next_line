@@ -23,11 +23,23 @@
 typedef struct	s_list
 {
 	char			*get;
-	int				index;
 	struct s_list	*next;
 }				t_list;
 
+typedef struct z_list
+{
+	struct t_list	*first;
+	struct t_list	*last;
+}	z_list;
+
+
 char	*get_next_line(int fd);
-void	lst_pop(t_list *lst, char **line, int fd);
+int 	ft_strlen(const char *str);
 void	ft_realloc(char **line, t_list *lst);
+void	lst_read(int fd, z_list **data);
+int 	lst_contains(t_list *lst, char c, int mode);
+void	lst_append(char *buf, int readed, z_list **data);
+void	lst_pop(z_list *data, char **line);
+void	lst_pop2(z_list **data);
+void	lst_free(z_list *data);
 #endif
