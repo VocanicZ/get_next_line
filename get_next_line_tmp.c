@@ -27,8 +27,6 @@ char	*get_next_line(int fd)
 	lst_pop2(&list);
 	if (!line[0])
 	{
-		//lst_free(list->first);
-		//list = 0;
 		free(line);
 		return (NULL);
 	}
@@ -127,6 +125,7 @@ void	lst_pop(t_list *lst, char **line)
 void	lst_pop2(h_list **list)
 {
 	t_list	*new_node;
+	t_list	*tmp;
 	int		i;
 	int		j;
 
@@ -147,7 +146,8 @@ void	lst_pop2(h_list **list)
 		new_node->get[j++] = (*list)->last->get[i++];
 	new_node->get[j] = '\0';
 	new_node->next = 0;
-	lst_free((*list)->first);
+	tmp = (*list)->first;
 	(*list)->first = new_node;
+	lst_free(tmp);
 	(*list)->last = new_node;
 }
