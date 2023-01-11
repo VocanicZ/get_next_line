@@ -83,10 +83,14 @@ void lst_print(h_list *list)
 
 void    main(void)
 {
-    static h_list  *list;
+    h_list  *list;
     int     ran;
 
     printf("start\n");
+    if (!list)
+    {
+        list = 0;
+    }
     lst_print(list);
     ran = 0;
     while (ran < 10)
