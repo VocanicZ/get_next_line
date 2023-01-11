@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line_tmp.h"
-
+#include <stdio.h>
 char	*get_next_line(int fd)
 {
 	//static t_list	*lst;
@@ -21,21 +21,30 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
 		return (0);
+	printf("[1]");
 	lst_read(fd, &list);//&lst, &last);
+	printf("[2]");
 	if (!list->first)//lst)
 	{
+		printf("[2.1]");
 		list = 0;
 		return (0);
 	}
+	printf("[3]");
 	lst_pop(list->first, &line);//lst, &line);
+	printf("[4]");
 	lst_pop2(&list);//&lst, &last);
+	printf("[5]");
 	if (!line[0])
 	{
+		printf("[5.1]");
 		lst_free(list->first);//lst);
+		printf("[5.2]");
 		list = 0;//lst = 0;
 		free(line);
 		return (NULL);
 	}
+	printf("[6]");
 	return (line);
 }
 
