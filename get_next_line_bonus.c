@@ -115,7 +115,7 @@ void	lst_pop(t_list *lst, char **line)
 	(*line)[j] = '\0';
 }
 
-void	lst_pop2(h_list **list, h_list **first)
+void	lst_pop2(h_list **list)
 {
 	t_list	*new_node;
 	t_list	*tmp;
