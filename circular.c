@@ -73,7 +73,7 @@ void lst_print(h_list *list)
     current = list;
     printf("Circular buffer list: ");
     do {
-        printf("[%d]{%d} ", current->fd, list->fd);
+        printf("[%d] ", current->fd);
         current = current->next;
     } while (current != list);
     printf("\n");
@@ -83,15 +83,17 @@ void    main(void)
 {
     static h_list  *list;
     int     ran;
+    int     i;
 
     printf("start\n");
     srand(time(NULL));
+    i = 0;
     do
     {
         ran = rand() % 100;
         printf("rand gen-> %d\n", ran);
-        lst_get(ran, &list);
+        printf("get -> %d\n", lst_get(ran, &list)->fd);
         lst_print(list);
-        ran++;
-    } while (ran < 100);
+        i++;
+    } while (i < 100);
 }
