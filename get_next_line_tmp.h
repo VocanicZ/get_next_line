@@ -28,8 +28,8 @@ typedef struct	s_list
 
 typedef struct	z_list 
 {
-	struct s_list	*head;
-	struct s_list	*tail;
+	struct s_list	*first;
+	struct s_list	*last;
 }				h_list;
 
 
