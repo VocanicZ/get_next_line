@@ -81,16 +81,10 @@ void	lst_append(h_list **list, char *buf, int i)
 	}
 	new_node->get[j] = '\0';
 	if (!(*list)->first)
-	{
 		(*list)->first = new_node;
-		(*list)->last = new_node;
-		return ;
-	}
 	else
-	{
 		(*list)->last->next = new_node;
-		(*list)->last = new_node;
-	}
+	(*list)->last = new_node;
 }
 
 void	lst_pop(t_list *lst, char **line)
