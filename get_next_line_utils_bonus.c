@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/05 20:40:00 by marvin            #+#    #+#             */
-/*   Updated: 2022/11/05 20:40:00 by marvin           ###   ########.fr       */
+/*   Created: 2023/01/11 23:48:42 by marvin            #+#    #+#             */
+/*   Updated: 2023/01/11 23:48:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,67 +85,4 @@ void	lst_free(t_list *lst)
 		free(cur);
 		cur = next;
 	}
-}
-
-h_list *lst_get(int fd, h_list **list)
-{
-    h_list *current = *list;
-
-    // If the list is empty, create a new node and set it to point to itself
-    if (!current) {
-        h_list *new_node = malloc(sizeof(h_list));
-        new_node->fd = fd;
-        new_node->next = new_node;
-        *list = new_node;
-        return new_node;
-    }
-    
-    // Iterate through the circular buffer
-    while (current->next != *list) {
-        if (current->fd == fd) {
-            // Node with matching fd found, return it
-            return current;
-        }
-        current = current->next;
-    }
-
-    // If no matching node was found, create a new one
-    h_list *new_node = malloc(sizeof(h_list));
-    new_node->fd = fd;
-    new_node->next = current->next;
-    current->next = new_node;
-
-    // Insert the new node in front of the node with fd < input fd
-    h_list *node = *list;
-    while (node->next != *list && node->next->fd < fd) {
-        node = node->next;
-    }
-    new_node->next = node->next;
-    node->next = new_node;
-    return new_node;
-}
-
-void lst_del(int fd, h_list **list)
-{
-    h_list *current = *list;
-    h_list *prev = current;
-
-    while (current->next != *list) {
-        if (current->fd == fd) {
-            prev->next = current->next;
-            free(current);
-            if (current == *list) {
-                *list = prev;
-            }
-            return;
-        }
-        prev = current;
-        current = current->next;
-    }
-    // if current is the last node and fd is equal to fd
-    if(current->fd == fd) {
-        prev->next = *list;
-		lst_free(current->first);
-		free(current);
-    }
 }
