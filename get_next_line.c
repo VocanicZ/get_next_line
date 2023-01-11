@@ -23,7 +23,7 @@ char	*get_next_line(int fd)
 	{
 		list = malloc(sizeof(h_list));
 		if (!list)
-			return ;
+			return (0);
 		(list)->first = 0;
 		(list)->last = 0;
 	}
