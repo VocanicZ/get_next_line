@@ -132,10 +132,7 @@ void	lst_pop2(h_list **list)
 		i++;
 	new_node->get = (char *) malloc(sizeof(char) * ((ft_strlen((*list)->last->get) - i) + 1));
 	if (!new_node->get)
-	{
-		free(new_node);
 		return ;
-	}
 	j = 0;
 	while ((*list)->last->get[i])
 		new_node->get[j++] = (*list)->last->get[i++];
