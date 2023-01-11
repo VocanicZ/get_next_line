@@ -91,9 +91,9 @@ void    main(void)
     do
     {
         ran = rand() % 100;
-        printf("rand gen-> %d\n", ran);
+        printf("round %d : rand gen-> %d\n", i, ran);
         printf("get -> %d\n", lst_get(ran, &list)->fd);
         lst_print(list);
         i++;
-    } while (i < 100);
+    } while (i < 10);
 }
