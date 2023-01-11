@@ -25,5 +25,5 @@ typedef struct	z_list
 
 h_list *lst_get(int fd, h_list **list);
 void lst_del(int fd, h_list **list);
-void lst_print(h_list *list)
+void lst_print(h_list *list);
 #endif
