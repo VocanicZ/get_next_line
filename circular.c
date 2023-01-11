@@ -72,7 +72,7 @@ void lst_print(h_list *list)
         printf("The list is empty\n");
         return;
     }
-    current = list;
+    *current = &list;
     printf("Circular buffer list: ");
     do {
         printf("%d ", current->fd);
