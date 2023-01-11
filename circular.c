@@ -2,16 +2,17 @@
 
 h_list *lst_get(int fd, h_list **list)
 {
-    h_list *current = *list;
+    h_list *current;
 
     // If the list is empty, create a new node and set it to point to itself
-    if (!current) {
+    if (!*list) {
         h_list *new_node = malloc(sizeof(h_list));
         new_node->fd = fd;
         new_node->next = new_node;
         *list = new_node;
         return new_node;
     }
+    current = *list;
     
     // Iterate through the circular buffer
     while (current->next != *list) {
