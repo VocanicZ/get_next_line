@@ -14,35 +14,35 @@
 
 h_list *lst_get(int fd, h_list **list)
 {
-    h_list *current;
-
-    if (!*list) {
-        h_list *new_node = malloc(sizeof(h_list));
-        new_node->fd = fd;
-        new_node->next = new_node;
-        *list = new_node;
-        return new_node;
-    }
-    current = *list;
+    h_list *current = *list;
     h_list *new_node = malloc(sizeof(h_list));
+
     new_node->fd = fd;
-    if (current->fd > fd)
+    new_node->first = 0;
+    new_node->last = 0;
+    if (!current || current->fd > fd)
     {
-        new_node->next = current;
+        new_node->next = current ? current : new_node;
         while (current->next != *list)
             current = current->next;
-        current->next = new_node;
+        if (current)
+            current->next = new_node;
         *list = new_node;
-        return new_node;
     }
-    while (current->next != *list && current->next->fd <= fd) {
-        if (current->fd == fd) {
-            return current;
+    else
+    {
+        while (current->next != *list && current->next->fd <= fd)
+        {
+            if (current->fd == fd)
+            {
+                free(new_node);
+                return current;
+            }
+            current = current->next;
         }
-        current = current->next;
+        new_node->next = current->next;
+        current->next = new_node;
     }
-    new_node->next = current->next;
-    current->next = new_node;
     return new_node;
 }
 
