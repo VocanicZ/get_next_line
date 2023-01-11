@@ -129,7 +129,7 @@ void	lst_pop2(h_list **list)//t_list **lst, t_list **last)
 	i = lst_contains((*list)->last, '\n', 1);//last, '\n', 1);
 	if ((*list)->last->get && ((*list)->last->get[i] == '\n'))//(*last)->get && ((*last)->get[i] == '\n'))
 		i++;
-	new_node->get = (char *) malloc(sizeof(char) * ((ft_strlen((*list)->last->get) - i) + 1);//last)->get) - i) + 1));
+	new_node->get = (char *) malloc(sizeof(char) * ((ft_strlen((*list)->last->get) - i) + 1));//last)->get) - i) + 1));
 	if (!new_node->get)
 		return ;
 	j = 0;
