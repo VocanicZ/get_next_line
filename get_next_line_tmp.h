@@ -32,7 +32,6 @@ typedef struct	z_list
 	struct s_list	*last;
 }				h_list;
 
-
 char	*get_next_line(int fd);
 int 	ft_strlen(const char *str);
 void	ft_realloc(char **line, t_list *lst);
