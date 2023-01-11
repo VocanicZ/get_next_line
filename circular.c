@@ -42,6 +42,15 @@ void lst_del(int fd, h_list **list)
     h_list *current = *list;
     h_list *prev = current;
 
+    if (current->fd == fd)
+    {
+        while (current->next != current)
+            current = current->next;
+        current->next = prev->next;
+        *list = prev->next;
+        free(prev);
+        return ;
+    }
     while (current->next != *list) {
         if (current->fd == fd) {
             prev->next = current->next;
@@ -54,7 +63,6 @@ void lst_del(int fd, h_list **list)
         prev = current;
         current = current->next;
     }
-    // if current is the last node and fd is equal to fd
     if(current->fd == fd) {
         prev->next = *list;
 		free(current);
