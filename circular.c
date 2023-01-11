@@ -76,7 +76,7 @@ void lst_print(h_list *list)
         printf("[%d], ", current->fd);
         current = current->next;
     } while (current != list);
-    printf(", ->[%d]\n", current->fd);
+    printf("->[%d]\n", current->fd);
 }
 
 void    main(void)
