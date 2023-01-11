@@ -19,6 +19,14 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
 		return (0);
+	if (!list)
+	{
+		list = malloc(sizeof(h_list));
+		if (!list)
+			return ;
+		(list)->first = 0;
+		(list)->last = 0;
+	}
 	lst_read(fd, &list);
 	if (!list->first)
 		return (0);
@@ -27,7 +35,7 @@ char	*get_next_line(int fd)
 	if (!line[0])
 	{
 		free(line);
-		return (NULL);
+		return (0);
 	}
 	return (line);
 }
@@ -38,14 +46,6 @@ void	lst_read(int fd, h_list **list)
 	int		i;
 
 	i = 1;
-	if (!*list)
-	{
-		*list = malloc(sizeof(h_list));
-		if (!*list)
-			return ;
-		(*list)->first = 0;
-		(*list)->last = 0;
-	}
 	while (!lst_contains((*list)->last, '\n', 0) && i)
 	{
 		buf = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
