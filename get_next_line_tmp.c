@@ -148,6 +148,6 @@ void	lst_pop2(h_list **list)
 	new_node->next = 0;
 	tmp = (*list)->first;
 	(*list)->first = new_node;
-	lst_free(tmp);
 	(*list)->last = new_node;
+	lst_free(tmp);
 }
