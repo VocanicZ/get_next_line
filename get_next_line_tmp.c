@@ -91,7 +91,7 @@ void	lst_append(h_list **list, char *buf, int i)
 	}
 	else
 	{
-		(*list)->last->next = new_node;/
+		(*list)->last->next = new_node;
 		(*list)->last = new_node;
 	}
 }
