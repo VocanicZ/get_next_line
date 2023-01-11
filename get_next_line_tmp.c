@@ -80,6 +80,7 @@ void	lst_append(h_list **list, char *buf, int i)//t_list **lst, char *buf, int r
 	new_node->get = (char *) malloc(sizeof(char) * (i + 1));//readed + 1));
 	if (!new_node->get)
 	{
+		free(new_node);
 		list = 0;
 		return ;
 	}
