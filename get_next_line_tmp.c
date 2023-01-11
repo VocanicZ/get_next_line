@@ -21,12 +21,9 @@ char	*get_next_line(int fd)
 		return (0);
 	lst_read(fd, &list);
 	if (!list->first)
-	{
-		free(list);
 		return (0);
-	}
 	lst_pop(list->first, &line);
-	list->first = list->first->next;
+	//list->first = list->first->next;
 	lst_pop2(&list);
 	if (!line[0])
 	{
