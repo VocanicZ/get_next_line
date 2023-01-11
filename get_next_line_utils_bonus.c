@@ -92,7 +92,7 @@ h_list *lst_get(int fd, h_list **list)
     h_list *current = *list;
 
     // If the list is empty, create a new node and set it to point to itself
-    if (current == NULL) {
+    if (!current) {
         h_list *new_node = malloc(sizeof(h_list));
         new_node->fd = fd;
         new_node->next = new_node;
@@ -128,14 +128,8 @@ h_list *lst_get(int fd, h_list **list)
 void lst_del(int fd, h_list **list)
 {
     h_list *current = *list;
-
-    // If the list is empty, there's nothing to remove
-    if (current == NULL) {
-        return;
-    }
-
-    // Find the node to be removed
     h_list *prev = current;
+
     while (current->next != *list) {
         if (current->fd == fd) {
             prev->next = current->next;
