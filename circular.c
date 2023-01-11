@@ -89,7 +89,7 @@ void    main(void)
     do
     {
         ran = rand() % 100;
-        printf("rand gen-> %d\n", rand)
+        printf("rand gen-> %d\n", rand);
         lst_get(ran, &list);
         lst_print(list);
         ran++;
