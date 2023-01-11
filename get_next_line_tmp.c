@@ -16,15 +16,22 @@ char	*get_next_line(int fd)
 {
 	char			*line;
 	static h_list	*list;
+	t_list			*tmp;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
 		return (0);
-	lst_read(fd, &list);
+	if (!list)
+		lst_read(fd, &list);
 	if (!list->first)
 		return (0);
 	lst_pop(list->first, &line);
+	tmp = list->first;
 	list->first = list->first->next;
 	//lst_pop2(&list);
+	if (!list->first)
+		list->last = 0;
+	free(tmp->get);
+	free(tmp);
 	if (!line[0])
 	{
 		//lst_free(list->first);
