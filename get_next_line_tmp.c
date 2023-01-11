@@ -23,7 +23,10 @@ char	*get_next_line(int fd)
 		return (0);
 	lst_read(fd, &list);//&lst, &last);
 	if (!list->first)//lst)
+	{
+		list = 0;
 		return (0);
+	}
 	lst_pop(list->first, &line);//lst, &line);
 	lst_pop2(&list);//&lst, &last);
 	if (!line[0])
@@ -46,7 +49,10 @@ void	lst_read(int fd, h_list **list)//t_list **lst, t_list **last)
 	{
 		buf = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (!buf)
+		{
+			*list = 0;
 			return ;
+		}
 		i = read(fd, buf, BUFFER_SIZE);
 		if ((!(*list)->last && !i) || i == -1)//last && !i) || i == -1)
 		{
