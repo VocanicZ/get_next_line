@@ -73,10 +73,10 @@ void lst_print(h_list *list)
     current = list;
     printf("Circular buffer list: ");
     do {
-        printf("[%d] ", current->fd);
+        printf("[%d], ", current->fd);
         current = current->next;
     } while (current != list);
-    printf("\n");
+    printf(", ->[%d]\n", current->fd);
 }
 
 void    main(void)
