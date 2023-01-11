@@ -26,8 +26,6 @@ h_list *lst_get(int fd, h_list **list)
     // If no matching node was found, create a new one
     h_list *new_node = malloc(sizeof(h_list));
     new_node->fd = fd;
-    //new_node->next = current->next;
-    //current->next = new_node;
 
     // Insert the new node in front of the node with fd < input fd
     h_list *node = *list;
@@ -87,11 +85,13 @@ void    main(void)
     int     ran;
 
     printf("start\n");
-    ran = 0;
-    while (ran < 10)
+    srand(time(NULL));
+    do
     {
+        ran = rand() % 100;
+        printf("rand gen-> %d\n", rand)
         lst_get(ran, &list);
         lst_print(list);
         ran++;
-    }
+    } while (ran < 100)
 }

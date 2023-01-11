@@ -4,6 +4,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+#include <time.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 4096
