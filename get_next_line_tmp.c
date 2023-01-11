@@ -21,8 +21,6 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
 		return (0);
-	if (!list)
-		list = malloc(sizeof(h_list));
 	lst_read(fd, &list);//&lst, &last);
 	if (!list->first)//lst)
 		return (0);
@@ -82,6 +80,7 @@ void	lst_append(h_list **list, char *buf, int i)//t_list **lst, char *buf, int r
 	new_node->get[j] = '\0';
 	if (!*list)//lst)
 	{
+		*list = malloc(sizeof(h_list));
 		(*list)->first = new_node;//*lst = new_node;
 		(*list)->last = new_node;//*last = new_node;
 		return ;
