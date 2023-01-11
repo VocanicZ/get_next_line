@@ -17,7 +17,7 @@ h_list *lst_get(int fd, h_list **list)
     new_node->fd = fd;
     
     // Iterate through the circular buffer
-    while (current->next != *list && current->fd <= fd) {
+    while (current->next != *list && current->next->fd <= fd) {
         if (current->fd == fd) {
             // Node with matching fd found, return it
             return current;
