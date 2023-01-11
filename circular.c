@@ -65,17 +65,17 @@ void lst_print(h_list *list)
 {
     h_list *current;
 
-    // If the list is empty, there's nothing to print
     if (!list) {
         printf("The list is empty\n");
         return;
     }
     current = list;
     printf("Circular buffer list: ");
-    do {
+    while (current->next != list) 
+    {
         printf("[%d], ", current->fd);
         current = current->next;
-    } while (current != list);
+    }
     printf("->[%d]\n", current->fd);
 }
 
@@ -85,7 +85,7 @@ void    main(void)
     int     ran;
     int     i;
 
-    printf("start\n");
+    printf("generateing circular\n");
     srand(time(NULL));
     i = 0;
     do
@@ -96,4 +96,13 @@ void    main(void)
         lst_print(list);
         i++;
     } while (i < 10);
+    while (1)
+    {
+        printf("enter node to delete:");
+        scanf("%d", &ran);
+        printf("del -> %d\n", ran);
+        lst_del(&list, ran);
+        printf("DONE VVV\n");
+        lst_print(list);
+    }
 }
