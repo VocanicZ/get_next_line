@@ -19,7 +19,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
 		return (0);
-	list = lst_get(fd, list);
+	list = lst_get(fd, &list);
 	if (!list)
 		return (0);
 	lst_read(fd, &list);
