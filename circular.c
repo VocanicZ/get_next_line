@@ -93,5 +93,5 @@ void    main(void)
         lst_get(ran, &list);
         lst_print(list);
         ran++;
-    } while (ran < 100)
+    } while (ran < 100);
 }
