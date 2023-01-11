@@ -65,14 +65,14 @@ void lst_del(int fd, h_list **list)
 
 void lst_print(h_list *list)
 {
-    h_list *current = list;
+    h_list *current;
 
     // If the list is empty, there's nothing to print
-    if (current == NULL) {
+    if (!list) {
         printf("The list is empty\n");
         return;
     }
-
+    current = list;
     printf("Circular buffer list: ");
     do {
         printf("%d ", current->fd);
