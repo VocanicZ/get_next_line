@@ -26,8 +26,8 @@ h_list *lst_get(int fd, h_list **list)
     // If no matching node was found, create a new one
     h_list *new_node = malloc(sizeof(h_list));
     new_node->fd = fd;
-    new_node->next = current->next;
-    current->next = new_node;
+    //new_node->next = current->next;
+    //current->next = new_node;
 
     // Insert the new node in front of the node with fd < input fd
     h_list *node = *list;
