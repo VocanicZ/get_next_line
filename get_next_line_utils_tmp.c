@@ -46,7 +46,7 @@ int	lst_contains(t_list *lst, char c, int mode)
 	return (0);
 }
 
-void	ft_realloc(char **line, t_list *lst)
+void	lst_malloc(char **line, t_list *lst)
 {
 	int	i;
 	int	len;

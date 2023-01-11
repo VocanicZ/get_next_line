@@ -96,7 +96,7 @@ void	lst_pop(t_list *lst, char **line)
 
 	if (!lst)
 		return ;
-	ft_realloc(line, lst);
+	lst_malloc(line, lst);
 	if (!*line)
 		return ;
 	j = 0;
