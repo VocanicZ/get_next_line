@@ -19,6 +19,7 @@ char	*get_next_line(int fd)
 	char			*line;
 	static h_list	*list;
 
+	printf("[0]");
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
 		return (0);
 	printf("[1]");
