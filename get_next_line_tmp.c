@@ -61,23 +61,23 @@ void	lst_read(int fd, h_list **list)//t_list **lst, t_list **last)
 
 void	lst_append(h_list **list, char *buf, int i)//t_list **lst, char *buf, int readed, t_list **last)
 {
-	int		i;
+	int		j;
 	t_list	*new_node;
 
 	new_node = malloc(sizeof(t_list));
 	if (!new_node)
 		return ;
 	new_node->next = 0;
-	new_node->get = (char *) malloc(sizeof(char) * (readed + 1));
+	new_node->get = (char *) malloc(sizeof(char) * (i + 1));//readed + 1));
 	if (!new_node->get)
 		return ;
-	i = 0;
-	while (buf[i] && i < readed)
+	j = 0;
+	while (buf[j] && j < i)
 	{
-		new_node->get[i] = buf[i];
-		i++;
+		new_node->get[j] = buf[j];
+		j++;
 	}
-	new_node->get[i] = '\0';
+	new_node->get[j] = '\0';
 	if (!*list)//lst)
 	{
 		(*list)->first = new_node;//*lst = new_node;
@@ -85,7 +85,7 @@ void	lst_append(h_list **list, char *buf, int i)//t_list **lst, char *buf, int r
 		return ;
 	}
 	(*list)->last->next = new_node;//(*last)->next = new_node;
-	(*list)->last = new_node;(*last) = new_node;
+	(*list)->last = new_node;//(*last) = new_node;
 }
 
 void	lst_pop(t_list *lst, char **line)
