@@ -83,13 +83,13 @@ void lst_print(h_list *list)
 
 void    main(void)
 {
-    h_list  *list;
+    static h_list  *list;
     int     ran;
 
     printf("start\n");
     if (!list)
     {
-        list = 0;
+        list = malloc(sizeof(h_list));
     }
     lst_print(list);
     ran = 0;
