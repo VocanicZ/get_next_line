@@ -87,11 +87,6 @@ void    main(void)
     int     ran;
 
     printf("start\n");
-    if (!list)
-    {
-        list = malloc(sizeof(h_list));
-    }
-    lst_print(list);
     ran = 0;
     while (ran < 10)
     {
