@@ -44,7 +44,7 @@ void lst_del(int fd, h_list **list)
 
     if (current->fd == fd)
     {
-        while (current->next != current)
+        while (current->next != *list)
             current = current->next;
         current->next = prev->next;
         *list = prev->next;
