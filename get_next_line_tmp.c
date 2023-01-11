@@ -39,11 +39,7 @@ void	lst_read(int fd, h_list **list)
 
 	i = 1;
 	if (!*list)
-	{
 		*list = malloc(sizeof(h_list));
-		(*list)->first = 0;
-		(*list)->last = 0;
-	}
 	while (!lst_contains((*list)->last, '\n', 0) && i)
 	{
 		buf = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
