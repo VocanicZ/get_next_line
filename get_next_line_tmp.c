@@ -27,6 +27,7 @@ char	*get_next_line(int fd)
 	lst_pop2(&list);
 	if (!line[0])
 	{
+		free(list);
 		free(line);
 		return (NULL);
 	}
