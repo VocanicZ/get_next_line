@@ -151,6 +151,6 @@ void lst_del(int fd, h_list **list)
     // if current is the last node and fd is equal to fd
     if(current->fd == fd) {
         prev->next = *list;
-        free(current);
+		lst_free(current);
     }
 }
