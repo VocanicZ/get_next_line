@@ -92,7 +92,7 @@ void	lst_append(h_list **list, char *buf, int i)//t_list **lst, char *buf, int r
 	new_node->get[j] = '\0';
 	if (!*list)//lst)
 	{
-		*list = malloc(sizeof(h_list));c
+		*list = malloc(sizeof(h_list));
 		if (!*list)
 			return ;
 		(*list)->first = new_node;//*lst = new_node;
