@@ -15,7 +15,15 @@ h_list *lst_get(int fd, h_list **list)
     current = *list;
     h_list *new_node = malloc(sizeof(h_list));
     new_node->fd = fd;
-    
+    if (current->fd > fd)
+    {
+        new_node->next = current;
+        while (current->next != *list)
+            current = current->next;
+        current->next = new_node;
+        *list = new_node;
+        return new_node;
+    }
     // Iterate through the circular buffer
     while (current->next != *list && current->next->fd <= fd) {
         if (current->fd == fd) {
