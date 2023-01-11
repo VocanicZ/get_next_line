@@ -16,22 +16,15 @@ char	*get_next_line(int fd)
 {
 	char			*line;
 	static h_list	*list;
-	t_list			*tmp;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
 		return (0);
-	if (!list)
-		lst_read(fd, &list);
+	lst_read(fd, &list);
 	if (!list->first)
 		return (0);
 	lst_pop(list->first, &line);
-	tmp = list->first;
 	list->first = list->first->next;
-	//lst_pop2(&list);
-	if (!list->first)
-		list->last = 0;
-	free(tmp->get);
-	free(tmp);
+	lst_pop2(&list);
 	if (!line[0])
 	{
 		//lst_free(list->first);
@@ -140,17 +133,20 @@ void	lst_pop2(h_list **list)
 	new_node = malloc(sizeof(t_list));
 	if (!list || !new_node)
 		return ;
-	new_node->next = 0;
 	i = lst_contains((*list)->last, '\n', 1);
 	if ((*list)->last->get && ((*list)->last->get[i] == '\n'))
 		i++;
 	new_node->get = (char *) malloc(sizeof(char) * ((ft_strlen((*list)->last->get) - i) + 1));
 	if (!new_node->get)
+	{
+		free(new_node);
 		return ;
+	}
 	j = 0;
 	while ((*list)->last->get[i])
 		new_node->get[j++] = (*list)->last->get[i++];
 	new_node->get[j] = '\0';
+	new_node->next = 0;
 	lst_free((*list)->first);
 	(*list)->first = new_node;
 	(*list)->last = new_node;
