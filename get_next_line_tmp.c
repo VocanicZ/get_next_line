@@ -21,6 +21,8 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
 		return (0);
+	if (!list)
+		list = malloc(sizeof(h_list));
 	lst_read(fd, &list);//&lst, &last);
 	if (!list->first)//lst)
 		return (0);
