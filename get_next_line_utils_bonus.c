@@ -124,3 +124,33 @@ h_list *lst_get(int fd, h_list **list)
     node->next = new_node;
     return new_node;
 }
+
+void lst_del(int fd, h_list **list)
+{
+    h_list *current = *list;
+
+    // If the list is empty, there's nothing to remove
+    if (current == NULL) {
+        return;
+    }
+
+    // Find the node to be removed
+    h_list *prev = current;
+    while (current->next != *list) {
+        if (current->fd == fd) {
+            prev->next = current->next;
+            free(current);
+            if (current == *list) {
+                *list = prev;
+            }
+            return;
+        }
+        prev = current;
+        current = current->next;
+    }
+    // if current is the last node and fd is equal to fd
+    if(current->fd == fd) {
+        prev->next = *list;
+        free(current);
+    }
+}

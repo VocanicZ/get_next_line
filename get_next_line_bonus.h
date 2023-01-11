@@ -44,4 +44,5 @@ void	lst_pop(t_list *lst, char **line);
 void	lst_pop2(h_list **list);
 void	lst_free(t_list *lst);
 h_list *lst_get(int fd, h_list **list);
+void lst_del(int fd, h_list **list);
 #endif

@@ -16,19 +16,22 @@ char	*get_next_line(int fd)
 {
 	char			*line;
 	static h_list	*list;
+	h_list			*tmp;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
 		return (0);
 	list = lst_get(fd, &list);
-	if (!list)
+	tmp = list;
+	if (!list || !tmp)
 		return (0);
-	lst_read(fd, &list);
-	if (!list->first)
+	lst_read(fd, &tmp);
+	if (!tmp->first)
 		return (0);
-	lst_pop(list->first, &line);
-	lst_pop2(&list);
+	lst_pop(tmp->first, &line);
+	lst_pop2(&tmp, &list);
 	if (!line[0])
 	{
+		lst_del(fd, &list);
 		free(line);
 		return (0);
 	}
@@ -112,7 +115,7 @@ void	lst_pop(t_list *lst, char **line)
 	(*line)[j] = '\0';
 }
 
-void	lst_pop2(h_list **list)
+void	lst_pop2(h_list **list, h_list **first)
 {
 	t_list	*new_node;
 	t_list	*tmp;
