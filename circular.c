@@ -101,7 +101,7 @@ void    main(void)
         printf("enter node to delete:");
         scanf("%d", &ran);
         printf("del -> %d\n", ran);
-        lst_del(&list, ran);
+        lst_del(ran, &list);
         printf("DONE VVV\n");
         lst_print(list);
     }
