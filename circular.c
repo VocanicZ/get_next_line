@@ -8,12 +8,27 @@ h_list *lst_get(int fd, h_list **list)
     new_node = malloc(sizeof(h_list));
     new_node->fd = fd;
     new_node->next = new_node;
+    current = *list;
 
-    if (!*list) {
+    if (!current) {
         *list = new_node;
         return new_node;
     }
-    current = *list;
+    while (current->next != *list) {
+        if (current->fd == fd) {
+            return current;
+        }
+
+        current = current->next;
+    }
+    if (current->fd <= fd) {
+        new_node->next = current->next;
+        current->next = new_node;
+    } else {
+        new_node->next = current;
+        *list = new_node;
+    }
+    /*
     if (current->fd > fd)
     {
         new_node->next = current;
@@ -30,7 +45,7 @@ h_list *lst_get(int fd, h_list **list)
         current = current->next;
     }
     new_node->next = current->next;
-    current->next = new_node;
+    current->next = new_node;*/
     return new_node;
 }
 
