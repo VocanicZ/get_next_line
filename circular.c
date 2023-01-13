@@ -3,18 +3,17 @@
 h_list *lst_get(int fd, h_list **list)
 {
     h_list *current;
+    h_list *new_node;
+    
+    new_node = malloc(sizeof(h_list));
+    new_node->fd = fd;
+    new_node->next = new_node;
 
-    // If the list is empty, create a new node and set it to point to itself
     if (!*list) {
-        h_list *new_node = malloc(sizeof(h_list));
-        new_node->fd = fd;
-        new_node->next = new_node;
         *list = new_node;
         return new_node;
     }
     current = *list;
-    h_list *new_node = malloc(sizeof(h_list));
-    new_node->fd = fd;
     if (current->fd > fd)
     {
         new_node->next = current;
@@ -24,10 +23,8 @@ h_list *lst_get(int fd, h_list **list)
         *list = new_node;
         return new_node;
     }
-    // Iterate through the circular buffer
     while (current->next != *list && current->next->fd <= fd) {
         if (current->fd == fd) {
-            // Node with matching fd found, return it
             return current;
         }
         current = current->next;
