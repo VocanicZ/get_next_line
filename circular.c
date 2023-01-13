@@ -10,22 +10,22 @@ h_list *lst_get(int fd, h_list **list)
     new_node->next = new_node;
     current = *list;
 
-    if (!current) {
+    if (!current)
+    {
         *list = new_node;
         return new_node;
     }
-    while (current->next != *list) {
-        if (current->fd == fd) {
+    while (current->next != *list)
+    {
+        if (current->fd == fd)
             return current;
-        }
-
         current = current->next;
     }
+    current->next = new_node;
     if (current->fd <= fd) {
         new_node->next = current->next;
-        current->next = new_node;
     } else {
-        new_node->next = current;
+        new_node->next = *list;
         *list = new_node;
     }
     /*
