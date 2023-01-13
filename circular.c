@@ -21,10 +21,11 @@ h_list *lst_get(int fd, h_list **list)
             return current;
         current = current->next;
     }
-    current->next = new_node;
     if (current->fd <= fd) {
         new_node->next = current->next;
+        current->next = new_node;
     } else {
+        current->next = new_node;
         new_node->next = *list;
         *list = new_node;
     }
