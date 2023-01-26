@@ -10,17 +10,11 @@
 #  define BUFFER_SIZE 4096
 # endif
 
-typedef struct	s_list
-{
-	char			*get;
-	struct s_list	*next;
-}				t_list;
-
 typedef struct	z_list 
 {
 	int				fd;
-	struct s_list	*first;
-	struct s_list	*last;
+	char			*first;
+	char			*last;
 	struct z_list	*next;
 }				h_list;
 
