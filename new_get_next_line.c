@@ -6,7 +6,7 @@
 /*   By: nasuphar <nasuphar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 21:52:04 by nasuphar          #+#    #+#             */
-/*   Updated: 2023/01/27 00:18:58 by nasuphar         ###   ########.fr       */
+/*   Updated: 2023/01/27 02:44:29 by nasuphar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int     is_contain(char *str, char c, int returnIndex)
 {
     int     i;
 
+    if (!str)
+        return (0);
     i = -1;
     while (str[++i])
     {
@@ -66,10 +68,11 @@ void    lst_read(t_circular *list)
             free(buf);
             return ;
         }
-        buf[i] = '\0';
+        buf[i++] = '\0';
         printf("[%s]", buf);
         lst_append(list, buf, i);
         free(buf);
+        printf("buf freee\n");
     }
     printf("\n");
 }
@@ -88,8 +91,7 @@ char    *fd_pcat(char **dest, char *s1, char *s2)
     while (s2[++j])
         (*dest)[i++] = s2[j];
     (*dest)[i] = '\0';
-    free(s1);
-    free(s2);
+    printf("i = %d j = %d k = %d \n", i, j, k);
     return (&(*dest)[k]);
 }
 
@@ -97,13 +99,19 @@ void    lst_append(t_circular *list, char *buf, int i)
 {
     char    *newStr;
 
+    newStr = malloc(sizeof(char) * (is_contain(list->first, '\0', 1) + i));
+    if (!newStr)
+        return ;
     if (!list->first)
     {
-        list->first = buf;
-        list->last = buf;
+        list->first = fd_pcat(&newStr, 0, buf);
         return ;
     }
-    newStr = malloc(sizeof(char) * (is_contain(list->first, '\0', 1) + i + 1));
-    list->last = fd_pcat(&newStr, list->first, list->last);
+    printf("checkappend\n");
+    list->last = fd_pcat(&newStr, list->first, buf);
+    printf("b");
+    free(list->first);
+    printf("d\n");
     list->first = newStr;
 }
+/* can you check for memory leak from this unfinished get_next_line funtion i got segmentation fault, in my openion i think its caused by line 107 */

@@ -6,7 +6,7 @@
 /*   By: nasuphar <nasuphar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 22:17:41 by nasuphar          #+#    #+#             */
-/*   Updated: 2023/01/26 23:36:07 by nasuphar         ###   ########.fr       */
+/*   Updated: 2023/01/27 02:34:56 by nasuphar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	lst_del(int fd, t_circular **list)
 	prev = current;
 	if (!*list)
 		return ;
+	if (current->next == current)
+		*list = 0;
 	if (current->fd == fd)
 	{
 		if (current->next == *list)
